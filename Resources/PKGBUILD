@@ -1,0 +1,31 @@
+#Simple PKGBUILD that suits my need.
+
+pkgname=(s7)
+pkgver=1
+pkgrel=0
+arch=('x86_64' 'i686' 'armv7h' 'aarch64')
+url='http://github.com/nmset/s7/'
+# Add 'wxwidgets-gtk3' below.
+depends=('libinsane' 'podofo' 'libpaper')
+license=('CeCILL' 'CeCILL-C')
+OPTIONS=(strip)
+
+build() {
+    cd ${startdir}
+    [ ! -d build ] && mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${pkgdir}/usr/local ../../
+    make -j8
+    cd ${startdir}/../Resources/Lokalize
+    ./2_makemo.sh
+    cd -
+}
+
+package() {
+    cd ${startdir}/build
+    make install
+    cd -
+    mkdir -p ${pkgdir}/usr/local/share/locale/fr/LC_MESSAGES
+    cp ${startdir}/../Resources/Lokalize/fr/S7.mo ${pkgdir}/usr/local/share/locale/fr/LC_MESSAGES
+    rm -fr ${startdir}/build
+}
