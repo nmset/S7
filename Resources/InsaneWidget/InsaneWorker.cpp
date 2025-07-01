@@ -434,7 +434,12 @@ bool InsaneWorker::Scan(const std::string& dir, const std::string& basename,
   if (m_evh)
     m_evh->OnEndScanSession(pageIndex - increment, imageAttributes);
 
-  m_rootSourceItem->close(m_sourceItem); // Child.
+  /*
+   * Don't close the child item.
+   * A v4l device may become unusable after the first capture (its child source
+   * item may have been faked by libinsane if it had none).
+   * Real scanners sustain both situations so far.
+   */
   m_rootSourceItem->close(m_rootSourceItem); // Root.
   return true;
 }
