@@ -16,7 +16,6 @@
 #include <ScannerWidget.h>
 #include "TimeredStatusBar.h"
 #include "InsaneWorker.h"
-#include "Common.h"
 #include <map>
 
 class BackgroundScannerDiscoveryEvent;
@@ -33,6 +32,7 @@ class BackgroundScannerDiscoveryEvent;
 
 class XScannerWidget : public ScannerWidget
 {
+  DECLARE_DYNAMIC_CLASS( XScannerWidget )
   friend class BackgroundScannerDiscovery;
 public:
   XScannerWidget() {};

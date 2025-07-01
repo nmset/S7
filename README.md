@@ -5,9 +5,10 @@ This is a simple scanning application with these goals:
  - full page scan
  - known number of pages to scan
  - double-sided handling
- - multiple output file format: PNG, JPEG, TIFF, PNM and PDF.
+ - multiple output file format: PNG, JPEG, TIFF, PNM and PDF
+ - apply an optional stamp on each page.
 
-It is based on [libinsane](https://gitlab.gnome.org/World/OpenPaperwork/libinsane) and written with [wxWidgets](https://wxwidgets.org).
+It is based on [libinsane](https://gitlab.gnome.org/World/OpenPaperwork/libinsane) and [wxWidgets](https://wxwidgets.org).
 
 ![S7_01](S7_01.png)
 
@@ -22,6 +23,7 @@ Inputs:
  - the scanner and its minimal parameters (source, mode, resolution)
  - page size
  - output file format.
+ - an optional stamp text
 
 Right click on the 'New' label to specify the number of faces and whether double-sided scanning is needed.
 

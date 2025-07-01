@@ -103,6 +103,7 @@ InsaneWidget::~InsaneWidget()
 void InsaneWidget::Init()
 {
 ////@begin InsaneWidget member initialisation
+    szInsaneWidgetMain = NULL;
     lblNewDoc = NULL;
     txtNewDoc = NULL;
     btnScan = NULL;
@@ -119,11 +120,11 @@ void InsaneWidget::CreateControls()
 ////@begin InsaneWidget content construction
     InsaneWidget* itemPanel1 = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemPanel1->SetSizer(itemBoxSizer2);
+    szInsaneWidgetMain = new wxBoxSizer(wxVERTICAL);
+    itemPanel1->SetSizer(szInsaneWidgetMain);
 
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer1, 0, wxGROW|wxALL, 5);
+    szInsaneWidgetMain->Add(itemBoxSizer1, 0, wxGROW|wxALL, 5);
 
     lblNewDoc = new wxStaticText( itemPanel1, ID_NewDoc_LBL, _("New"), wxDefaultPosition, wxDefaultSize, 0 );
     if (InsaneWidget::ShowToolTips())
@@ -137,7 +138,7 @@ void InsaneWidget::CreateControls()
 
     btnScan = new wxButton( itemPanel1, ID_Scan_BTN, _("Scan"), wxDefaultPosition, wxDefaultSize, 0 );
     if (InsaneWidget::ShowToolTips())
-        btnScan->SetToolTip(_("'Left click' to start the scan project.\n'Right click' to show the scanner widget."));
+        btnScan->SetToolTip(_("'Left click' to start the scan project.\n'Right click' to show the scanner widget.\n'Ctrl + Right click' to show the Stamp dialog."));
     itemBoxSizer1->Add(btnScan, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 ////@end InsaneWidget content construction

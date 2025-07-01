@@ -13,9 +13,13 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}
                     Resources/InsaneWidget
                     Resources/Utilities
                     Resources/InsaneWidget/UI
+                    Resources/StampWidget
+                    Resources/StampWidget/UI
+                    
                     Resources/UI/S7)
 
 add_subdirectory(Resources/Utilities)
+add_subdirectory(Resources/StampWidget)
 add_subdirectory(Resources/InsaneWidget)
 
 add_executable(s7 
@@ -25,6 +29,6 @@ add_executable(s7
 
 install(TARGETS s7 RUNTIME DESTINATION bin)
 
-target_link_libraries(s7 minutils insanewidget
+target_link_libraries(s7 insanewidget
                     ${wxWidgets_LIBRARIES}
                     )

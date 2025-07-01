@@ -1,14 +1,14 @@
 // /*
-//  * File:   Common.h
+//  * File:   DefsInsaneWidget.h
 //  * Author: Saleem Edah-Tally - nmset@yandex.com
 //  * License : CeCILL-C
 //  * Copyright Saleem Edah-Tally - © 2025
 //  *
-//  * Created on 27 06 2025, 20:34
+//  * Created on 08 07 2025, 20:44
 //  */
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef DEFSINSANEWIDGET_H
+#define DEFSINSANEWIDGET_H
 
 #include <string>
 #include <map>
@@ -27,4 +27,4 @@ static void UpdateExtensionsMap()
   Extensions[PNM] = "pnm";
 }
 
-#endif // COMMON_H
+#endif // DEFSINSANEWIDGET_H

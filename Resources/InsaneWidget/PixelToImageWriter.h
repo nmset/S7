@@ -10,19 +10,26 @@
 #ifndef PIXELTOIMAGEWRITER_H
 #define PIXELTOIMAGEWRITER_H
 
-#include "Common.h"
+#include "DefsInsaneWidget.h"
 #include <string>
+#include <vector>
 #include <wx/wx.h>
+
+struct StampDescriptor;
 
 /**
  * Create an image file from a raw scanned file.\n
+ * Optionally,\n
+ *  - use an wxImage object from the application\n
+ *  - blend a stamp image on the converted image.\n
  */
 class PixelToImageWriter
 {
+  DECLARE_DYNAMIC_CLASS( PixelToImageWriter )
 public:
   static bool Convert(const std::string& pixelFilePath,
-            int imageWidth, int imageHeight, int outputFormat = PNG,
-            wxImage * image = nullptr);
+            int imageWidth, int imageHeight, std::vector<StampDescriptor*> * descriptors,
+            int outputFormat = PNG, wxImage * image = nullptr);
 };
 
 #endif // PIXELTOIMAGEWRITER_H

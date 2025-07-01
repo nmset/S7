@@ -12,7 +12,10 @@
 #include <MiscTools.h>
 #include "PixelToImageWriter.h"
 #include "PixelToPdfWriter.h"
-#include <Common.h>
+#include <DefsInsaneWidget.h>
+#include <DefsStampWidget.h>
+#include <XStampWidget.h>
+#include <StampWorker.h>
 
 using namespace std;
 
@@ -46,19 +49,28 @@ public:
   {
   }
   /*
-   * mode, outputType, adf, doubleSided, total, PaperSize:
+   * mode, resolution, outputType, adf, doubleSided, total, PaperSize:
    * These are not updated here if there are pending jobs.
    * However,
    *  deviceId, source, sourceIndex, mode, resolution, paperSize
    * can be changed if there are pending jobs in ConfigureDevice() since it is
    * called before these setters. They won't change on their own but by user
    * interaction.
+   * The 'resolution' variable is used downstream to distinguish between v4l
+   * and real scanners. v4l devices do not have a source and a resolution
+   * tunables.
    */
   void SetMode(const string& mode)
   {
     if (m_pixelFiles.size())
       return;
     m_mode = mode;
+  }
+  void SetResolution(int resolution)
+  {
+    if (m_pixelFiles.size())
+      return;
+    m_resolution = resolution;
   }
   void SetOutputType(int outputType)
   {
@@ -100,6 +112,10 @@ public:
     if (m_pixelFiles.size())
       return;
     m_paperSize = paperSize;
+  }
+  void SetStampDescriptors(vector<StampDescriptor*> * descriptors)
+  {
+    m_stampDescriptors = descriptors;
   }
   std::pair<int, int> GetStartAndIncrement(InsaneWorker * insaneWorker)
   {
@@ -162,11 +178,12 @@ public:
       
       m_sb->SetStatusText(msg);
     };
-    
+
     if (m_outputType != PDF)
     {
       // Convert pixel file to PNG using netpbm.
-      if (!PixelToImageWriter::Convert(filePath, imageAttributes.width, imageAttributes.height, m_outputType))
+      if (!PixelToImageWriter::Convert(filePath, imageAttributes.width, imageAttributes.height,
+                                  m_stampDescriptors, m_outputType))
       {
         const wxString msg = _("Failed to create output image.");
         cerr << msg << endl;
@@ -191,7 +208,8 @@ public:
         cerr << msg << endl;
         pageSize = PoDoFo::PdfPageSize::A4;
       }
-      if (!m_pixelToPdfWriter->AddPageAt(filePath, imageAttributes.width, imageAttributes.height, index, pageSize))
+      if (!m_pixelToPdfWriter->AddPageAt(filePath, imageAttributes.width, imageAttributes.height, index,
+                              m_stampDescriptors, pageSize))
       {
         const wxString msg = _("Failed to add page to PDF document.");
         cerr << msg << endl;
@@ -241,6 +259,17 @@ public:
       }
     }
   }
+  void OnStartScanSession(uint pageIndex, const ImageAttributes& imageAttributes) override
+  {
+    if (!m_stampDescriptors)
+      return;
+    for (StampDescriptor * descriptor : *m_stampDescriptors)
+    {
+      if (descriptor->text.IsEmpty())
+        continue;
+      descriptor->image = StampWorker::CreateStamp(descriptor, m_resolution);
+    }
+  }
   void Reset()
   {
     // Don't reset calculated variables that depend on widgets.
@@ -255,7 +284,9 @@ private:
   wxWeakRef<TimeredStatusBar> m_sb = nullptr;
   std::unique_ptr<PixelToPdfWriter> m_pixelToPdfWriter;
   PixelFilesMap m_pixelFiles;
+  vector<StampDescriptor*> * m_stampDescriptors = nullptr;
   string m_mode = "Color";
+  int m_resolution = -1;
   uint m_outputType = PDF;
   wxString m_paperSize = _T("A4");
   bool m_adf = false;
@@ -268,12 +299,20 @@ private:
 };
 
 // ----------------------------------------------------------------------------
+IMPLEMENT_CLASS( XInsaneWidget, InsaneWidget )
+
 XInsaneWidget::XInsaneWidget(wxWindow* parent, TimeredStatusBar * sb, wxConfig * config, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 : InsaneWidget(parent, id, pos, size, style)
 {
   UpdateExtensionsMap();
   m_config = config;
   m_sb = sb;
+}
+
+XInsaneWidget::~XInsaneWidget() = default; // Important for mixing unique_ptr and PIMPL.
+
+void XInsaneWidget::Setup()
+{
   lblNewDoc->Bind ( wxEVT_RIGHT_UP, &XInsaneWidget::OnLblNewDocRightClick, this );
   txtNewDoc->Bind ( wxEVT_KEY_UP, &XInsaneWidget::OnTxtNewDocKeyPressed, this );
   
@@ -283,7 +322,7 @@ XInsaneWidget::XInsaneWidget(wxWindow* parent, TimeredStatusBar * sb, wxConfig *
   m_insaneWorker = std::make_unique<InsaneWorker>(m_scanProject.get());
   m_scannerWidget = std::make_unique<XScannerWidget> ( m_ptwScannerWidget.get(), m_sb, m_insaneWorker.get() );
   m_scannerWidget->SetConfig ( m_config );
-  
+
   btnScan->Enable(false);
   btnScan->Bind ( wxEVT_RIGHT_UP, &XInsaneWidget::OnBtnScanRightClick, this );
   btnScan->Bind ( wxEVT_LEFT_UP, &XInsaneWidget::OnBtnScanClick, this );
@@ -293,7 +332,6 @@ XInsaneWidget::XInsaneWidget(wxWindow* parent, TimeredStatusBar * sb, wxConfig *
   backgroundDiscovery->Run();
 }
 
-XInsaneWidget::~XInsaneWidget() = default; // Important for mixing unique_ptr and PIMPL.
 
 // Show a popup to specifiy the number of pages to scan and back-sided scanning.
 void XInsaneWidget::OnLblNewDocRightClick ( wxMouseEvent& evt )
@@ -328,16 +366,38 @@ void XInsaneWidget::OnTxtNewDocKeyPressed ( wxKeyEvent& evt )
   evt.Skip();
 }
 
-// Show the scanner widget.
+// Show the scanner widget or the stamp widgets.
 void XInsaneWidget::OnBtnScanRightClick ( wxMouseEvent& evt )
 {
-  if ( m_scannerWidget->cmbDevices->GetCount() )
+  if (evt.ControlDown())
   {
-    const wxSize current = m_scannerWidget->GetSize();
-    m_scannerWidget->SetSize ( wxSize ( 500, current.GetHeight() ) );
+    if (!m_dlgStampWidgets)
+    {
+      m_dlgStampWidgets = std::make_unique<wxDialog>
+                            (nullptr, wxID_ANY, _("Stamps"),
+                            wxDefaultPosition, wxDefaultSize,
+                            wxCAPTION | wxRESIZE_BORDER | wxCLOSE_BOX);
+      m_dlgStampWidgets->SetSize(600, 500);
+      m_dlgStampWidgets->SetSizer(new wxBoxSizer(wxVERTICAL));
+      m_dlgStampWidgets->Show ( false );
+      m_stampWidgets = std::make_unique<XStampWidgets> ( m_dlgStampWidgets.get());
+      m_stampWidgets->Setup(m_config);
+      m_dlgStampWidgets->GetSizer()->Add(m_stampWidgets.get(), 1, wxGROW | wxALL, 5);
+    }
+    m_dlgStampWidgets->Show();
   }
-  MiscTools::ShowTransientPopup ( m_ptwScannerWidget.get(), m_scannerWidget.get() );
-  evt.Skip();
+  else
+  {
+    if ( m_scannerWidget->cmbDevices->GetCount() )
+    {
+      const wxSize current = m_scannerWidget->GetSize();
+      m_scannerWidget->SetSize ( wxSize ( 500, current.GetHeight() ) );
+    }
+    MiscTools::ShowTransientPopup ( m_ptwScannerWidget.get(), m_scannerWidget.get() );
+  }
+  // +++ Prevent OnLblNewDocRightClick() from being called.
+  // Why is OnBtnScanRightClick() not called the other way round?
+  evt.Skip(false); 
 }
 
 // Start scanning.
@@ -367,7 +427,7 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
   const std::pair<int, wxString> sourceAttributes = m_scannerWidget->GetScannerSource();
   const string source = sourceAttributes.second.ToStdString();
   const string mode = m_scannerWidget->GetScannerMode().ToStdString();
-  int resolution = 300;
+  int resolution = -1; // No resolution with v4l devices.
   if ( !m_scannerWidget->GetScannerResolution().IsEmpty() )
   {
     resolution = std::stoi ( m_scannerWidget->GetScannerResolution().ToStdString() );
@@ -379,10 +439,13 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
   {
     m_scanProject->SetADF(adf);
     m_scanProject->SetMode(mode);
+    m_scanProject->SetResolution(resolution);
     m_scanProject->SetOutputType(outputType);
     m_scanProject->SetPaperSize(paperSize);
     m_scanProject->SetDoubleSided(doubleSided);
     m_scanProject->SetTotalNumberOfSides(total);
+    m_stampDescriptors = m_stampWidgets->GetStampDescriptors();
+    m_scanProject->SetStampDescriptors(m_stampDescriptors);
     
     std::pair<int, int> startAndIncrement = m_scanProject->GetStartAndIncrement(m_insaneWorker.get());
     

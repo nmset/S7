@@ -16,18 +16,23 @@
 #include <InsaneWidget.h>
 #include <InsaneWorker.h>
 #include <XScannerWidget.h>
+#include <XStampWidget.h>
+#include <XStampWidgets.h>
 #include <TimeredStatusBar.h>
 #include <ConfigEditorPopup.h>
 #include <memory>
+#include <vector>
 
 class BackgroundScannerDiscoveryEVH;
 class ScanProjectHandler; // An event handler extending InsaneWorkerEvent.
+class XStampWidget;
+struct StampDescriptor;
 
 // Page index (not page number), {pixel file path, {pixel count, image width, image height}}.
 typedef std::map<uint, std::tuple<std::string, InsaneWorkerEvent::ImageAttributes>> PixelFilesMap;
 
 /**
- * Shows a label, a disabled text box and a button.
+ * Shows a label, a disabled text box, and a button.
  * 
  * Label:
  *  - Right click: define the number of pages to scan and double-sided scanning.
@@ -48,9 +53,11 @@ typedef std::map<uint, std::tuple<std::string, InsaneWorkerEvent::ImageAttribute
  * Button:
  *  - Right click: shows the scanner widget.
  *  - Left click: starts scanning.
+ *  - Ctrl + Right click: show the stamp widgets dialog.
  */
 class XInsaneWidget : public InsaneWidget
 {
+  DECLARE_DYNAMIC_CLASS( XInsaneWidget )
 public:
   virtual ~XInsaneWidget();
   XInsaneWidget( wxWindow* parent, TimeredStatusBar * sb,  wxConfig * config, wxWindowID id = SYMBOL_INSANEWIDGET_IDNAME, const wxPoint& pos = SYMBOL_INSANEWIDGET_POSITION, const wxSize& size = SYMBOL_INSANEWIDGET_SIZE, long style = SYMBOL_INSANEWIDGET_STYLE );
@@ -58,14 +65,19 @@ public:
   void ResetScanProject();
   void CancelScanning(); // Not tested, probably doesn't work as intended.
   void EnableScanButton(bool enable); // For CallAfter.
+  void Setup();
 private:
   wxConfig * m_config;
   wxWeakRef<TimeredStatusBar> m_sb;
+  std::vector<StampDescriptor*> * m_stampDescriptors;
 
   // Contains a popup to define the number of pages and double-sided scanning.
   std::unique_ptr<ConfigEditorPopup> m_pageStack;
   // Contains the scanner widget.
   std::unique_ptr<wxPopupTransientWindow> m_ptwScannerWidget;
+  // Contains the stamp widgets.
+  std::unique_ptr<wxDialog> m_dlgStampWidgets;
+  std::unique_ptr<XStampWidgets> m_stampWidgets;
   // Available devices and minimal options.
   std::unique_ptr<XScannerWidget> m_scannerWidget;
   std::unique_ptr<InsaneWorker> m_insaneWorker;

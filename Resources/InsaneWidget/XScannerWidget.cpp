@@ -9,12 +9,14 @@
 
 #include "XScannerWidget.h"
 #include "XClientData.hpp"
-#include "Common.h"
+#include "DefsInsaneWidget.h"
 #include <libinsane/constants.h>
 #include <fstream>
 #include <vector>
 
 using namespace std;
+
+IMPLEMENT_CLASS( XScannerWidget, ScannerWidget )
 
 XScannerWidget::~XScannerWidget()
 {}

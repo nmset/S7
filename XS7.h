@@ -17,6 +17,7 @@
 
 class XS7 : public S7
 {
+  DECLARE_DYNAMIC_CLASS( XS7 )
 public:
   XS7(wxWindow* parent, wxWindowID id = SYMBOL_S7_IDNAME, const wxString& caption = SYMBOL_S7_TITLE,
       const wxPoint& pos = SYMBOL_S7_POSITION, const wxSize& size = SYMBOL_S7_SIZE, long style = SYMBOL_S7_STYLE );

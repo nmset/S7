@@ -9,23 +9,24 @@ find_package(LibInsane REQUIRED)
 find_package(PoDoFo REQUIRED)
 find_package(Paper REQUIRED)
 
-
 include_directories(${CMAKE_CURRENT_LIST_DIR}
                     ${CMAKE_CURRENT_LIST_DIR}/UI
+                    ${CMAKE_CURRENT_LIST_DIR}/../StampWidget
+                    ${CMAKE_CURRENT_LIST_DIR}/../StampWidget/UI
                     ${CMAKE_CURRENT_LIST_DIR}/../Utilities)
-
+                    
 add_library(insanewidget STATIC
             UI/InsaneWidget.cpp
             UI/ScannerWidget.cpp
 
-            Common.h
+            DefsInsaneWidget.h
             XInsaneWidget.cpp
             XScannerWidget.cpp
             InsaneWorker.cpp
             PixelToImageWriter.cpp
             PixelToPdfWriter.cpp)
 
-target_link_libraries(insanewidget minutils
+target_link_libraries(insanewidget minutils stampwidget
                     ${wxWidgets_LIBRARIES}
                     ${LIBINSANE_LIBRARIES}
                     ${PODOFO_LIBRARIES}

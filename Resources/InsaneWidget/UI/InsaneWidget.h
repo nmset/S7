@@ -25,6 +25,7 @@
  */
 
 ////@begin forward declarations
+class wxBoxSizer;
 ////@end forward declarations
 
 /*!
@@ -39,7 +40,7 @@
 #define SYMBOL_INSANEWIDGET_STYLE wxTAB_TRAVERSAL
 #define SYMBOL_INSANEWIDGET_TITLE _("InsaneWidget")
 #define SYMBOL_INSANEWIDGET_IDNAME ID_INSANEWIDGET
-#define SYMBOL_INSANEWIDGET_SIZE wxSize(400, 300)
+#define SYMBOL_INSANEWIDGET_SIZE wxDefaultSize
 #define SYMBOL_INSANEWIDGET_POSITION wxDefaultPosition
 ////@end control identifiers
 
@@ -87,6 +88,7 @@ public:
     static bool ShowToolTips();
 
 ////@begin InsaneWidget member variables
+    wxBoxSizer* szInsaneWidgetMain;
     wxStaticText* lblNewDoc;
     wxTextCtrl* txtNewDoc;
     wxButton* btnScan;

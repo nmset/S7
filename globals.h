@@ -11,7 +11,7 @@
 #define GLOBALS_H
 
 #define _APPNAME_ "S7"
-#define _APPVERSION_ 1
+#define _APPVERSION_ 2
 #define _INSANEWIDGET_NAME "InsaneWidget"
 
 #endif /* GLOBALS_H */

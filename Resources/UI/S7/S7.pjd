@@ -419,7 +419,7 @@
               <bool name="proxy-wxRIGHT">1</bool>
               <bool name="proxy-wxSHAPED">0</bool>
               <bool name="proxy-wxTOP">1</bool>
-              <string name="title">"wxBoxSizer V"</string>
+              <string name="title">"wxBoxSizer V: szMain"</string>
               <long name="title-mode">0</long>
               <string name="type">"dialog-control-document"</string>
               <document>
@@ -526,7 +526,7 @@ Double-click to go to the selected directory."</string>
                 <long name="proxy-Height">-1</long>
                 <string name="proxy-Help text">"Basename"</string>
                 <bool name="proxy-Hidden">0</bool>
-                <string name="proxy-Id name">"ID_TEXTCTRL"</string>
+                <string name="proxy-Id name">"ID_TEXTCTRL_S7"</string>
                 <long name="proxy-Id value">10003</long>
                 <string name="proxy-Implementation filename">""</string>
                 <string name="proxy-Initial value">""</string>
@@ -576,7 +576,7 @@ Double-click to go to the selected directory."</string>
                 <bool name="proxy-wxWANTS_CHARS">0</bool>
                 <long name="proxy-X">-1</long>
                 <long name="proxy-Y">-1</long>
-                <string name="title">"wxTextCtrl: ID_TEXTCTRL"</string>
+                <string name="title">"wxTextCtrl: ID_TEXTCTRL_S7"</string>
                 <long name="title-mode">0</long>
                 <string name="type">"dialog-control-document"</string>
               </document>

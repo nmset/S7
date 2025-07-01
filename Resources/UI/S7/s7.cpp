@@ -126,7 +126,7 @@ void S7::CreateControls()
         dpkDestination->SetToolTip(_("Select a destination directory.\nDouble-click to go to the selected directory."));
     szMain->Add(dpkDestination, 0, wxGROW|wxALL, 5);
 
-    txtBasename = new wxTextCtrl( panMain, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    txtBasename = new wxTextCtrl( panMain, ID_TEXTCTRL_S7, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     txtBasename->SetHelpText(_("Basename"));
     if (S7::ShowToolTips())
         txtBasename->SetToolTip(_("Specify a destination file basename (without extension).\n\n'CTRL + click' for about information."));

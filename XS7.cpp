@@ -17,6 +17,8 @@
 
 using namespace std;
 
+IMPLEMENT_CLASS( XS7, S7 )
+
 XS7::XS7(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 : S7(parent, id, caption, pos, size, style)
 {}
@@ -63,7 +65,8 @@ void XS7::Setup()
   SetStatusBar(sb);
   
   m_insaneWidget = new XInsaneWidget(panMain, sb, m_config.get());
-  szMain->Add(m_insaneWidget, 0, wxGROW | wxALL);
+  m_insaneWidget->Setup();
+  szMain->Insert(2, m_insaneWidget, 1, wxGROW | wxALL);
   
   dpkDestination->Bind ( wxEVT_DIRPICKER_CHANGED, &XS7::OnDpkRepositoryChange, this );
   dpkDestination->GetTextCtrl()->Bind ( wxEVT_LEFT_DCLICK, &XS7::OnDpkDoubleClick, this );

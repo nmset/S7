@@ -12,13 +12,18 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <podofo/podofo.h>
+#include <wx/wx.h>
+
+struct StampDescriptor;
 
 /**
  * Create a PDF document, append or insert pages from raw scanned files.\n
  * Each image is a full page scan; it is scaled in the PDF document to the full 
  * page dimensions.\n
- * Account for page size.
+ * Account for page size.\n
+ * Optionally, a stamp image may be blended on the page.
  */
 class PixelToPdfWriter
 {
@@ -27,6 +32,7 @@ public:
 
   PixelToPdfWriter();
   bool AddPageAt(const std::string& pixelFile, uint width, uint height, uint index,
+          std::vector<StampDescriptor*> * descriptors,
           PoDoFo::PdfPageSize pageSize = PoDoFo::PdfPageSize::A4,
           PoDoFo::PdfColorSpace = PoDoFo::PdfColorSpace::DeviceRGB /*Unused*/);
   void Save(const std::string& pdfFile);

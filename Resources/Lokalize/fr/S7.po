@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-26 22:47+0200\n"
-"PO-Revision-Date: 2025-06-26 22:47+0200\n"
+"POT-Creation-Date: 2025-07-09 16:00+0200\n"
+"PO-Revision-Date: 2025-07-09 16:03+0200\n"
 "Last-Translator: Saleem EDAH-TALLY <set@nmset.info>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #: ../../Resources/UI/S7/s7.cpp:126 ../..//Resources/UI/S7/s7.cpp:126
 msgid ""
@@ -40,14 +40,23 @@ msgstr ""
 "'CTRL + clic' : à propos"
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:128
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:129
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:132
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:125
 msgid "New"
 msgstr "Nouveau"
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:130
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:131
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:134
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:127
 msgid "'Right' click to define a scan project."
 msgstr "Clic droit pour définir un projet de numérisation"
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:135
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:136
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:139
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:132
 msgid ""
 "Full path to destination file without the extension; it is determined by the "
 "output type."
@@ -56,10 +65,15 @@ msgstr ""
 "déterminée par le format de sortie."
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:138
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:139
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:142
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:135
 msgid "Scan"
 msgstr "Numériser"
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:140
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:141
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:144
 msgid ""
 "'Left click' to start the scan project.\n"
 "'Right click' to show the scanner widget."
@@ -93,41 +107,57 @@ msgstr "Résolution de la numérisation"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:128
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:107
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:132
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:133
 msgid "A scan library error occurred."
 msgstr "Une erreur de bibliothèque est survenue."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:134
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:113
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:138
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:139
 msgid "A general error occurred."
 msgstr "Une erreur générale est survenue."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:138
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:117
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:142
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:143
 msgid "A session read error occurred."
 msgstr "Une erreur de lecture est survenue."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:145
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:124
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:149
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:150
 msgid "Session cancelled."
 msgstr "Session annulée."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:162
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:141
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:166
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:167
 msgid "Scanning: "
 msgstr "Numérisation :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:164
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:143
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:168
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:169
 msgid "Front face: "
 msgstr "Recto :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:166
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:145
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:170
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:171
 msgid "Back face: "
 msgstr "Verso :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:170
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:149
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:174
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:175
 msgid ". Turn the whole stack of pages."
 msgstr ". Retournez toute la pile de pages."
 
@@ -138,16 +168,23 @@ msgstr "Échec de création d'image PNG."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:201
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:180
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:206
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:207
 msgid "Wrong paper size: "
 msgstr "Mauvaise taille de papier :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:201
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:180
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:206
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:207
 msgid "; using A4."
 msgstr "; utilisation du format A4."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:207
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:186
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:212
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:213
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:214
 msgid "Failed to add page to PDF document."
 msgstr "Échec d'ajout de page au document PDF."
 
@@ -160,17 +197,28 @@ msgstr "Format de fichier de sortie non pris en charge."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:264
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:243
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:255
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:256
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:257
 msgid "Finished."
 msgstr "Terminé."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:333
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:317
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:356
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:355
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:351
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:352
 msgid "Scan all front faces first, then all back faces in reverse order."
 msgstr ""
 "Numériser tous les faces recto, puis toutes les faces verso en ordre inverse."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:336
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:320
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:359
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:358
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:354
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:355
 msgid "Total number of sides to scan (not total number of sheets)."
 msgstr ""
 "Nombre total de faces à numériser (et non pas le nombre total de feuilles)."
@@ -188,10 +236,14 @@ msgid "CAPS"
 msgstr "CAPS"
 
 #: ../../Resources/InsaneWidget/XScannerWidget.cpp:50
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:62
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:64
 msgid "Searching for devices..."
 msgstr "Recherche de périphériques..."
 
 #: ../../Resources/InsaneWidget/XScannerWidget.cpp:53
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:65
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:67
 msgid "Could not initialise insane api."
 msgstr "Échec d'initialisation de la bibliothèque 'insane'."
 
@@ -199,23 +251,23 @@ msgstr "Échec d'initialisation de la bibliothèque 'insane'."
 msgid "'Shift + left' click'' to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../XS7.cpp:69 ../../XS7.cpp:104
+#: ../../XS7.cpp:69 ../../XS7.cpp:104 ../../XS7.cpp:105 ../../XS7.cpp:107
 msgid "Could not launch default file manager"
 msgstr "Échec de lancement du gestionnaire de fichier par défaut."
 
-#: ../../XS7.cpp:93 ../../XS7.cpp:128
+#: ../../XS7.cpp:93 ../../XS7.cpp:128 ../../XS7.cpp:129 ../../XS7.cpp:131
 msgid "Invalid folder name."
 msgstr "Nom de dossier invalide."
 
-#: ../../XS7.cpp:101 ../../XS7.cpp:136
+#: ../../XS7.cpp:101 ../../XS7.cpp:136 ../../XS7.cpp:137 ../../XS7.cpp:139
 msgid "Invalid file basename."
 msgstr "Nom de base de fichier invalide."
 
-#: ../../XS7.cpp:123 ../../XS7.cpp:158
+#: ../../XS7.cpp:123 ../../XS7.cpp:158 ../../XS7.cpp:159 ../../XS7.cpp:161
 msgid "Copyright: Saleem Edah-Tally [Surgeon] [Hobbyist developer]\n"
 msgstr "Copyright: Saleem Edah-Tally [Chirurgien] [Développeur par hobby]\n"
 
-#: ../../XS7.cpp:124 ../../XS7.cpp:159
+#: ../../XS7.cpp:124 ../../XS7.cpp:159 ../../XS7.cpp:160 ../../XS7.cpp:162
 msgid "License: CeCILL/CeCILL-C per file header."
 msgstr "Licence : CeCILL/CeCILL-C selon les entêtes de fichier."
 
@@ -224,6 +276,9 @@ msgid "S7"
 msgstr "S7"
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.h:40
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.h:45
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.h:49
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.h:41
 msgid "InsaneWidget"
 msgstr "InsaneWidget"
 
@@ -257,23 +312,32 @@ msgstr "Format de page :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:332
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:316
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:355
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:354
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:350
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:351
 msgid "Double sided:"
 msgstr "Recto-verso :"
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:334
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:318
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:357
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:356
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:352
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:353
 msgid "Total:"
 msgstr "Total :"
 
-#: ../../XS7.cpp:46 ../../XS7.cpp:81
+#: ../../XS7.cpp:46 ../../XS7.cpp:81 ../../XS7.cpp:82 ../../XS7.cpp:84
 msgid "'Shift + left' click to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../XS7.cpp:121 ../../XS7.cpp:45 ../../XS7.cpp:156
+#: ../../XS7.cpp:121 ../../XS7.cpp:45 ../../XS7.cpp:156 ../../XS7.cpp:157
+#: ../../XS7.cpp:47 ../../XS7.cpp:159
 msgid " - version "
 msgstr " - version "
 
-#: ../../XS7.cpp:122 ../../XS7.cpp:157
+#: ../../XS7.cpp:122 ../../XS7.cpp:157 ../../XS7.cpp:158 ../../XS7.cpp:160
 msgid ""
 ", using InsaneWidget.\n"
 "\n"
@@ -282,21 +346,222 @@ msgstr ""
 "\n"
 
 #: ../../Resources/InsaneWidget/XScannerWidget.cpp:73
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:85
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:87
 msgid " device(s) found."
 msgstr " périphériques trouvé(s)."
 
-#: ../../XS7.cpp:29
+#: ../../XS7.cpp:29 ../../XS7.cpp:31
 msgid "Config file tag."
 msgstr "Suffixe du fichier de configuration."
 
-#: ../../XS7.cpp:30
+#: ../../XS7.cpp:30 ../../XS7.cpp:32
 msgid "Show version and quit."
 msgstr "Afficher la version et quitter."
 
-#: ../../XS7.cpp:31
+#: ../../XS7.cpp:31 ../../XS7.cpp:33
 msgid "Show help and quit."
 msgstr "Afficher l'aide et quitter."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:352
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:391
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:390
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:408
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:409
 msgid "Destination file missing."
 msgstr "Fichier de destination manquant."
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:130
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:131
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:140
+msgid ""
+"Create a stamp with this text, which can be multiline.\n"
+"\n"
+"CTRL + S: save the current text.\n"
+"CTRL + R: restore the saved text."
+msgstr ""
+"Créer un tampon utilisant ce texte qui peut être multi-ligne.\n"
+"\n"
+"CTRL + S : sauvegarder le texte actuel.\n"
+"CTRL + R : restaurer le texte sauvegardé."
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:138
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:139
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:188
+msgid "Select the font of the stamp text."
+msgstr "Sélectionnez la police de caractère du texte."
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:143
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:144
+msgid "Select the colour of the stamp text."
+msgstr "Sélectionnez la couleur du texte."
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:148
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:155
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:199
+msgid "Select the rotation angle of the stamp text."
+msgstr "Sélectionnez l'angle de rotation du texte."
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:144
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:147
+msgid "Stamp"
+msgstr "Tampon"
+
+#: ../../Resources/InsaneWidget/PixelToImageWriter.cpp:34
+#: ../../Resources/InsaneWidget/PixelToImageWriter.cpp:35
+msgid "Failed to read raw file."
+msgstr "Échec de lecture du fichier brut."
+
+#: ../../Resources/InsaneWidget/PixelToImageWriter.cpp:60
+#: ../../Resources/InsaneWidget/PixelToImageWriter.cpp:68
+#: ../../Resources/InsaneWidget/PixelToImageWriter.cpp:69
+msgid "Unhandled output image format."
+msgstr "Format de fichier d'image en sortie non pris en charge."
+
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:187
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:188
+msgid "Failed to create output image."
+msgstr "Échec de création de l'image de sortie."
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.h:46
+#: ../../Resources/InsaneWidget/UI/StampWidget.h:47
+#: ../../Resources/StampWidget/UI/StampWidget.h:57
+msgid "StampWidget"
+msgstr ""
+
+#: ../../Resources/InsaneWidget/UI/StampWidget.cpp:150
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:171
+msgid "Location of the stamp on the output."
+msgstr "Place du tampon dans la sortie."
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:156
+#: ../../Resources/InsaneWidget/UI/StampWidgets.cpp:127
+#: ../../Resources/StampWidget/UI/StampWidgets.cpp:127
+msgid "+"
+msgstr ""
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:158
+#: ../../Resources/InsaneWidget/UI/StampWidgets.cpp:129
+#: ../../Resources/StampWidget/UI/StampWidgets.cpp:129
+msgid "Add a stamp widget."
+msgstr "Ajouter un widget 'Tampon'."
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:161
+#: ../../Resources/InsaneWidget/UI/StampWidgets.cpp:132
+#: ../../Resources/StampWidget/UI/StampWidgets.cpp:132
+msgid "-"
+msgstr ""
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:163
+#: ../../Resources/InsaneWidget/UI/StampWidgets.cpp:134
+#: ../../Resources/StampWidget/UI/StampWidgets.cpp:134
+msgid "Remove the selected stamp widget."
+msgstr "Supprimer le widget 'Tampon' sélectionné."
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:56
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:57
+#: ../../Resources/StampWidget/XStampWidget.cpp:76
+msgid "Centre"
+msgstr "Centre"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:57
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/StampWidget/XStampWidget.cpp:77
+msgid "North"
+msgstr "Nord"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:57
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/StampWidget/XStampWidget.cpp:77
+msgid "South"
+msgstr "Sud"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:57
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/StampWidget/XStampWidget.cpp:77
+msgid "West"
+msgstr "Ouest"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:59
+#: ../../Resources/StampWidget/XStampWidget.cpp:78
+msgid "North-east"
+msgstr "Nord-est"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:59
+#: ../../Resources/StampWidget/XStampWidget.cpp:78
+msgid "North-west"
+msgstr "Nord-ouest"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:59
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:60
+#: ../../Resources/StampWidget/XStampWidget.cpp:79
+msgid "South-east"
+msgstr "Sud-est"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:59
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:60
+#: ../../Resources/StampWidget/XStampWidget.cpp:79
+msgid "South-west"
+msgstr "Sud-ouest"
+
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:57
+#: ../../Resources/InsaneWidget/XStampWidget.cpp:58
+#: ../../Resources/StampWidget/XStampWidget.cpp:77
+msgid "East"
+msgstr "Est"
+
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:137
+#: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:141
+msgid ""
+"'Left click' to start the scan project.\n"
+"'Right click' to show the scanner widget.\n"
+"'Ctrl + Right click' to show the Stamp dialog."
+msgstr ""
+"'Clic gauche' pour démarrer la numérisation.\n"
+"'Clic droit' pour afficher les options du numériseur.\n"
+"'Ctrl + Clic droit' pour définir un tampon."
+
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:376
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:377
+msgid "Stamps"
+msgstr "Tampons"
+
+#: ../../Resources/InsaneWidget/UI/StampWidgets.h:44
+#: ../../Resources/StampWidget/UI/StampWidgets.h:44
+msgid "StampWidgets"
+msgstr ""
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:149
+msgid "Foreground:"
+msgstr "Avant-plan :"
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:154
+msgid "Foreground colour of the text."
+msgstr "Couleur du texte."
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:157
+msgid "Background:"
+msgstr "Arrière-plan :"
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:162
+msgid "Background colour of the text."
+msgstr "Couleur de l'arrière-plan."
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:165
+msgid "Location:"
+msgstr "Position :"
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:177
+msgid "Click to update the preview."
+msgstr "Cliquez pour actualiser l'aperçu."
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:191
+msgid "Transparent"
+msgstr "Transparent"
+
+#: ../../Resources/StampWidget/UI/StampWidget.cpp:194
+msgid ""
+"Check for a completely transparent background and for a transparent text."
+msgstr "Activez la transparence du texte et de l'arrière-plan. "

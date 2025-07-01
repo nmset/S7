@@ -13,7 +13,6 @@
 #include <sstream>
 #include <fstream>
 #include <paper.h>
-#include <libinsane/log.h>
 #include <libinsane/safebet.h>
 #include <libinsane/error.h>
 #include <libinsane/util.h>
@@ -273,7 +272,8 @@ bool InsaneWorker::ConfigureDevice(const std::string& deviceId,
    * Sounds weird but needed.
    */
   lis_set_option(m_sourceItem, OPT_NAME_SOURCE, source.c_str());
-  lis_set_option(m_sourceItem, OPT_NAME_RESOLUTION, to_string(resolution).c_str());
+  if (resolution > 0) // No resolution with v4l devices.
+    lis_set_option(m_sourceItem, OPT_NAME_RESOLUTION, to_string(resolution).c_str());
   pair<double, double> br;
   if (GetBottomRight(br))
   {

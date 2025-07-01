@@ -8,14 +8,17 @@
 //  */
 
 #include "PixelToImageWriter.h"
-#include <Common.h>
+#include <StampWorker.h>
 #include <fstream>
+#include <DefsInsaneWidget.h>
+#include <DefsStampWidget.h>
 
 using namespace std;
 
 bool PixelToImageWriter::Convert(const std::string& pixelFilePath,
-                                    int imageWidth, int imageHeight,
-                                    int outputFormat, wxImage * image)
+                                int imageWidth, int imageHeight,
+                                std::vector<StampDescriptor*> * descriptors,
+                                int outputFormat, wxImage * image)
 {
   UpdateExtensionsMap();
   wxImage * outImage = image;
@@ -35,6 +38,16 @@ bool PixelToImageWriter::Convert(const std::string& pixelFilePath,
   raw.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
 
   outImage->SetData((unsigned char*) raw.data(), imageWidth, imageHeight, true); // true +++
+  if (descriptors)
+  {
+    for (StampDescriptor * descriptor : *descriptors)
+    {
+      if (descriptor)
+      {
+        StampWorker::StampBackground(*outImage, descriptor->image, descriptor->location);
+      }
+    }
+  }
   
   switch (outputFormat)
   {

@@ -9,7 +9,11 @@
 
 #include "PixelToPdfWriter.h"
 #include <iostream>
+#include <sstream>
 #include <memory>
+#include <StampWorker.h>
+#include <DefsInsaneWidget.h>
+#include <DefsStampWidget.h>
 
 using namespace std;
 using namespace PoDoFo;
@@ -29,8 +33,9 @@ PixelToPdfWriter::PixelToPdfWriter()
 }
 
 
-bool PixelToPdfWriter::AddPageAt(const std::string& pixelFile, uint width, uint height, uint index, 
-                               PoDoFo::PdfPageSize pageSize, PoDoFo::PdfColorSpace)
+bool PixelToPdfWriter::AddPageAt(const std::string& pixelFile, uint width, uint height, uint index,
+                                std::vector<StampDescriptor*> * descriptors,
+                                PoDoFo::PdfPageSize pageSize, PoDoFo::PdfColorSpace)
 {
   try
   {
@@ -46,6 +51,23 @@ bool PixelToPdfWriter::AddPageAt(const std::string& pixelFile, uint width, uint 
     ifstream ifs(pixelFile, ios::binary);
     string content;
     content.assign(istreambuf_iterator<char>(ifs), istreambuf_iterator<char>());
+    if (descriptors)
+    {
+      for (StampDescriptor * descriptor : *descriptors)
+      {
+        if (!descriptor)
+          continue;
+        
+        wxImage background;
+        background.SetData(reinterpret_cast<unsigned char*> (content.data()), width, height, true);
+        StampWorker::StampBackground(background, descriptor->image, descriptor->location); 
+        stringstream ssStamped;
+        ssStamped.write((const char*) (background.GetData()), width * height * 3);
+        ssStamped.flush();
+        content.clear();
+        content = ssStamped.str();
+      }
+    }
     bufferview bv(content);
 
     const uint pageNumber = m_doc.GetPages().GetCount();
