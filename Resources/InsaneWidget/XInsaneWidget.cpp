@@ -444,8 +444,11 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
     m_scanProject->SetPaperSize(paperSize);
     m_scanProject->SetDoubleSided(doubleSided);
     m_scanProject->SetTotalNumberOfSides(total);
-    m_stampDescriptors = m_stampWidgets->GetStampDescriptors();
-    m_scanProject->SetStampDescriptors(m_stampDescriptors);
+    if (m_stampWidgets)
+    {
+      m_stampDescriptors = m_stampWidgets->GetStampDescriptors();
+      m_scanProject->SetStampDescriptors(m_stampDescriptors);
+    }
     
     std::pair<int, int> startAndIncrement = m_scanProject->GetStartAndIncrement(m_insaneWorker.get());
     
