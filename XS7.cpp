@@ -110,6 +110,11 @@ void XS7::OnDpkDoubleClick ( wxMouseEvent& evt )
 
 void XS7::OnAppKeyPressed(wxKeyEvent& evt)
 {
+  if (evt.ControlDown())
+  {
+    if (evt.GetKeyCode() == 'Q')
+      Close();
+  }
   if (evt.GetKeyCode() == WXK_ESCAPE)
     if (m_insaneWidget)
       m_insaneWidget->CancelScanning();
