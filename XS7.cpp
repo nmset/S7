@@ -126,7 +126,7 @@ void XS7::OnAppKeyPressed(wxKeyEvent& evt)
 
 void XS7::OnNewDocLeftClick ( wxMouseEvent& evt )
 {
-  if ( !evt.ShiftDown() )
+  if ( !evt.ShiftDown() || !m_insaneWidget->lblNewDoc->IsEnabled() )
   {
     evt.Skip();
     return;

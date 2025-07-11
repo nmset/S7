@@ -116,6 +116,15 @@ void MiscTools::MessageBox ( const wxString& msg, const bool notify )
   }
 }
 
+void MiscTools::AsyncMessageBox(const wxString& msg, const bool notify)
+{
+  wxTheApp->CallAfter([msg, notify] ()
+    {
+      MiscTools::MessageBox(msg, notify);
+    }
+  );
+}
+
 wxTextValidator* MiscTools::MakeFileNameValidator ( bool excludeSpace )
 {
   wxTextValidator * tval = new wxTextValidator ( wxFILTER_EXCLUDE_CHAR_LIST );

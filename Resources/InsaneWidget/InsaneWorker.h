@@ -88,6 +88,7 @@ private:
   lis_item * m_sourceItem = nullptr;
   InsaneWorkerEvent * m_evh = nullptr;
 
+  bool m_cancelRequested = false;
   std::vector<DeviceDescriptor> m_devices;
   std::string m_deviceId;
   std::string m_source = "FlatBed";

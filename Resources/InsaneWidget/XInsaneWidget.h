@@ -63,7 +63,7 @@ public:
   XInsaneWidget( wxWindow* parent, TimeredStatusBar * sb,  wxConfig * config, wxWindowID id = SYMBOL_INSANEWIDGET_IDNAME, const wxPoint& pos = SYMBOL_INSANEWIDGET_POSITION, const wxSize& size = SYMBOL_INSANEWIDGET_SIZE, long style = SYMBOL_INSANEWIDGET_STYLE );
 
   void ResetScanProject();
-  void CancelScanning(); // Not tested, probably doesn't work as intended.
+  void CancelScanning();
   void EnableScanButton(bool enable); // For CallAfter.
   void Setup();
 private:

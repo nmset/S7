@@ -30,5 +30,4 @@ target_link_libraries(insanewidget minutils stampwidget
                     ${wxWidgets_LIBRARIES}
                     ${LIBINSANE_LIBRARIES}
                     ${PODOFO_LIBRARIES}
-                    ${NETPBM_LIBRARIES}
                     ${PAPER_LIBRARIES})

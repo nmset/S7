@@ -19,6 +19,8 @@
 
 using namespace std;
 
+static wxCriticalSection gs_safeLock;
+
 // When device discovery in a detached thread completes.
 // ----------------------------------------------------------------------------
 class BackgroundScannerDiscoveryEVH : public BackgroundScannerDiscoveryEvent
@@ -38,6 +40,36 @@ public:
   }
 private:
   wxWeakRef<XInsaneWidget> m_owner = nullptr;
+};
+
+// ----------------------------------------------------------------------------
+class BackgroundScan : public wxThread
+{
+public:
+  BackgroundScan(XInsaneWidget * insaneWidget, InsaneWorker * insaneWorker,
+                 const wxString& dir, const wxString& basename,
+                 int start = 0, int padWidth = 2, int increment = 1)
+  {
+    m_insaneWidget = insaneWidget;
+    m_insaneWorker = insaneWorker;
+    m_dir = dir;
+    m_basename = basename;
+    m_start = start;
+    m_padWidth = padWidth;
+    m_increment = increment;
+  }
+  ExitCode Entry() override
+  {
+    // Just in case.
+    wxCriticalSectionLocker locker(gs_safeLock);
+    m_insaneWorker->Scan(m_dir.ToStdString(), m_basename.ToStdString(), m_start, m_padWidth, m_increment);
+    return (ExitCode) 0;
+  }
+private:
+  wxWeakRef<XInsaneWidget> m_insaneWidget = nullptr;
+  InsaneWorker * m_insaneWorker = nullptr;
+  wxString m_dir, m_basename;
+  int m_start = 0, m_padWidth = 2, m_increment = 1;
 };
 
 // ----------------------------------------------------------------------------
@@ -117,6 +149,41 @@ public:
   {
     m_stampDescriptors = descriptors;
   }
+  // WIP means InsaneWorker is busy, not the position in a scan project.
+  void SetWip(bool wip)
+  {
+    m_wip = wip;
+  }
+  bool GetWip() const
+  {
+    return m_wip;
+  }
+  /* Enable/disable the label and destination file controls per scanning and
+   * idle mode.
+   * Do not include in Reset() because the status of the scan button is
+   * independent of the rest.
+   */
+  void UpdateControlsStatus(bool enable)
+  {
+    wxTheApp->CallAfter([this, enable] ()
+      {
+        m_owner->lblNewDoc->Enable(enable);
+        m_owner->txtNewDoc->Enable(enable);
+        if (enable)
+        {
+          m_owner->btnScan->Enable(enable);
+          m_owner->btnScan->SetLabelText(_("Scan"));
+        }
+        else
+        {
+          /*Only XInsaneWidget::Setup() and XInsaneWidget::CancelScanning()
+           * disable the scan button.
+           */
+          m_owner->btnScan->SetLabelText(_("Cancel"));
+        }
+      }
+    );
+  }
   std::pair<int, int> GetStartAndIncrement(InsaneWorker * insaneWorker)
   {
     wxASSERT_MSG(insaneWorker != nullptr, "insaneWorker is NULL.");
@@ -130,26 +197,35 @@ public:
   {
     cerr << message << endl;
     Reset();
-    MiscTools::MessageBox(_("A scan library error occurred."), true);
+    UpdateControlsStatus(true);
+    const wxString msg = _("A scan library error occurred.");
+    MiscTools::AsyncMessageBox(msg, true);
   }
   void OnError ( const std::string& message ) override
   {
     cerr << message << endl;
     Reset();
-    MiscTools::MessageBox(_("A general error occurred."), true);
+    UpdateControlsStatus(true);
+    const wxString msg = _("A general error occurred.");
+    MiscTools::AsyncMessageBox(msg, true);
   }
   void OnSessionReadError(const std::string & filePath) override
   {
     const wxString msg = _("A session read error occurred.");
     cerr << msg << endl;
     Reset();
-    MiscTools::MessageBox(msg, true);
+    UpdateControlsStatus(true);
+    MiscTools::AsyncMessageBox(msg, true);
   }
   void OnSessionCancelled(const std::string & filePath) override
   {
-    const wxString msg = _("Session cancelled.");
+    if (wxFileExists(filePath))
+      wxRemoveFile(filePath);
     Reset();
-    MiscTools::MessageBox(msg, true);
+    UpdateControlsStatus(true);
+    const wxString msg = _("Session cancelled.");
+    MiscTools::AsyncMessageBox(msg, true);
+    m_sb->CallAfter(&TimeredStatusBar::SetTransientText, msg, 3000);
   }
   // Every time a page is fully scanned.
   void OnPageEndScan(const std::string & filePath, uint pageIndex,
@@ -158,7 +234,7 @@ public:
     m_startPageIndex = pageIndex;
     m_pixelFiles[pageIndex] = {filePath, imageAttributes};
     
-    auto informProgress = [&] ()
+    auto informProgress = [this] ()
     {
       if (!m_sb || (m_total == 1))
         return;
@@ -175,20 +251,19 @@ public:
         wxString upperBoundMessage = _(". Turn the whole stack of pages.");
         msg += upperBoundMessage;
       }
-      
-      m_sb->SetStatusText(msg);
+      m_sb->CallAfter(&wxStatusBar::SetStatusText, msg, 0);
     };
 
     if (m_outputType != PDF)
     {
-      // Convert pixel file to PNG using netpbm.
+      // Convert pixel file to PNG using wxImage.
       if (!PixelToImageWriter::Convert(filePath, imageAttributes.width, imageAttributes.height,
                                   m_stampDescriptors, m_outputType))
       {
         const wxString msg = _("Failed to create output image.");
         cerr << msg << endl;
         if (m_sb)
-          m_sb->SetTransientText(msg);
+          m_sb->CallAfter(&TimeredStatusBar::SetTransientText, msg, 3000);
       }
       wxRemoveFile(filePath);
       informProgress();
@@ -214,7 +289,7 @@ public:
         const wxString msg = _("Failed to add page to PDF document.");
         cerr << msg << endl;
         if (m_sb)
-          m_sb->SetTransientText(msg);
+          m_sb->CallAfter(&TimeredStatusBar::SetTransientText, msg, 3000);
       }
       wxRemoveFile(filePath);
       informProgress();
@@ -251,16 +326,19 @@ public:
         m_pixelToPdfWriter.reset((new PixelToPdfWriter())); // For next scan project.
       }
       Reset();
-      m_owner->txtNewDoc->Clear();
+      m_owner->txtNewDoc->CallAfter(&wxTextCtrl::SetValue, wxString());
       if (m_sb)
       {
         const wxString msg = _("Finished.");
-        m_sb->SetTransientText(msg);
+        m_sb->CallAfter(&TimeredStatusBar::SetTransientText, msg, 3000);
       }
     }
+    UpdateControlsStatus(true);
+    m_wip = false;
   }
   void OnStartScanSession(uint pageIndex, const ImageAttributes& imageAttributes) override
   {
+    // Dealing with stamps only.
     if (!m_stampDescriptors)
       return;
     for (StampDescriptor * descriptor : *m_stampDescriptors)
@@ -277,6 +355,7 @@ public:
     m_increment = 1;
     m_totalEven = 0;
     m_pixelFiles.clear();
+    m_wip = false;
   }
   
 private:
@@ -295,6 +374,7 @@ private:
   int m_totalEven = 0;
   int m_startPageIndex = 0;
   int m_increment = 1;
+  bool m_wip = false; // Is InsaneWorker busy?
   
 };
 
@@ -336,6 +416,11 @@ void XInsaneWidget::Setup()
 // Show a popup to specifiy the number of pages to scan and back-sided scanning.
 void XInsaneWidget::OnLblNewDocRightClick ( wxMouseEvent& evt )
 {
+  if (!lblNewDoc->IsEnabled())
+  {
+    evt.Skip();
+    return;
+  }
   /*
    * The previous ConfigEditorPopup is deleted here, which commits the
    * parameters to the config file. At any time, the current parameter values
@@ -403,6 +488,12 @@ void XInsaneWidget::OnBtnScanRightClick ( wxMouseEvent& evt )
 // Start scanning.
 void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
 {
+  if (m_scanProject->GetWip())
+  {
+    CancelScanning();
+    evt.Skip();
+    return;
+  }
   const wxString dest = txtNewDoc->GetValue();
   if (dest.IsEmpty())
   {
@@ -453,9 +544,17 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
     std::pair<int, int> startAndIncrement = m_scanProject->GetStartAndIncrement(m_insaneWorker.get());
     
     const int padWidth = ( ushort ) m_config->Read (_T("/Scanner/Counter/Length"), 2 );
-    bool res = m_insaneWorker->Scan(destFile.GetPath().ToStdString(),
-                                    destFile.GetName().ToStdString(),
-                                    startAndIncrement.first, padWidth, startAndIncrement.second);
+    // bool res = m_insaneWorker->Scan(destFile.GetPath().ToStdString(),
+    //                                 destFile.GetName().ToStdString(),
+    //                                 startAndIncrement.first, padWidth, startAndIncrement.second);
+    m_scanProject->UpdateControlsStatus(false);
+    BackgroundScan * bgScan = new BackgroundScan(this, m_insaneWorker.get(),
+                                                 destFile.GetPath().ToStdString(),
+                                                 destFile.GetName().ToStdString(),
+                                                 startAndIncrement.first, padWidth,
+                                                 startAndIncrement.second);
+    m_scanProject->SetWip(true);
+    bgScan->Run();
   }
   evt.Skip();
 }
@@ -468,8 +567,11 @@ void XInsaneWidget::ResetScanProject()
 
 void XInsaneWidget::CancelScanning()
 {
-  if (m_insaneWorker)
+  if (m_insaneWorker && m_scanProject->GetWip())
+  {
     m_insaneWorker->Cancel();
+    btnScan->Enable(false);
+  }
 }
 
 void XInsaneWidget::EnableScanButton(bool enable)
