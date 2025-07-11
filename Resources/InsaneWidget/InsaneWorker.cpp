@@ -22,7 +22,6 @@
 using namespace std;
 
 #define IERR(e) ("[" + to_string(e) + "] " + lis_strerror(e))
-static bool gs_cancelRequested = false;
 
 InsaneWorker::InsaneWorker ( InsaneWorkerEvent * evh )
 {
@@ -306,6 +305,8 @@ bool InsaneWorker::Scan(const std::string& dir, const std::string& basename,
       return false;
     }
   }
+  if (m_cancelRequested)
+    return false;
   auto makeFileName = [&] (int index)
   {
     // std:format is not friendly with a variable padwidth; requires a literal format.
@@ -375,12 +376,13 @@ bool InsaneWorker::Scan(const std::string& dir, const std::string& basename,
       m_evh->OnPageStartScan(filePath, pageIndex, imageAttributes);
     do
     {
-      if (gs_cancelRequested)
+      if (m_cancelRequested)
       {
         session->cancel(session);
+        m_rootSourceItem->close(m_rootSourceItem);
         if (m_evh)
           m_evh->OnSessionCancelled(filePath);
-        gs_cancelRequested = false;
+        m_cancelRequested = false;
         return false;
       }
       try
@@ -410,7 +412,7 @@ bool InsaneWorker::Scan(const std::string& dir, const std::string& basename,
       catch (std::bad_alloc& e)
       {
         m_rootSourceItem->close(m_rootSourceItem);
-        cout << "ABORT: " << e.what() << " - could not allocate " << bytesPerRow << " bytes." << endl;
+        cerr << "ABORT: " << e.what() << " - could not allocate " << bytesPerRow << " bytes." << endl;
         if (m_evh)
           m_evh->OnError("Insufficient system RAM.");
         return false;
@@ -516,7 +518,7 @@ std::string InsaneWorker::ToLower(const std::string& input)
 
 void InsaneWorker::Cancel()
 {
-  gs_cancelRequested = true;
+  m_cancelRequested = true;
 }
 
 std::pair<int, int> InsaneWorker::UpdateStartAndIncrement(const int startPageIndex, const int increment,

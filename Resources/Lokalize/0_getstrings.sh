@@ -15,6 +15,8 @@ DEST=$DOMAIN/${COMPONENT_NAME}.po
 [ -f $DEST ] && cp $DEST $DEST.bak-$(date +%F-%T)
 [ ! -f $DEST ] && touch $DEST
 
+# Memo: use '--no-location' transiently to get rid of obsolete file locations.
+
 xgettext --keyword=_ -d $DOMAIN $JOIN -o $DEST --c++ --from-code=UTF-8 $(find $SRC -type f  -name "*.cpp")
 xgettext --keyword=_ -d $DOMAIN -j -o $DEST --c++ --from-code=UTF-8 $(find $SRC -type f -name "*.h")
 

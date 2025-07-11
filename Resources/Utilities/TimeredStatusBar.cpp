@@ -14,7 +14,7 @@ TimeredStatusBar::TimeredStatusBar ( wxWindow * parent)
 {
   m_numFields = 3;
   /* We use default reasonable widths for CAPS and NUM. */
-  const int widths[3] = {-1, 70, 70};
+  const int widths[3] = {-1, 70, 90};
   SetFieldsCount ( m_numFields, widths );
   m_timer.Stop();
   m_timer.SetOwner ( this );

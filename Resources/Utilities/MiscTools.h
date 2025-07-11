@@ -45,6 +45,7 @@ public:
    * Shows a message as a modal dialog or as a notification.
    */
   static void MessageBox ( const wxString& msg, const bool notify = false );
+  static void AsyncMessageBox ( const wxString& msg, const bool notify = false );
 
   /**
    * Creates a validator excluding file name forbidden characters, path

@@ -31,6 +31,10 @@ Right click on the 'New' label to specify the number of faces and whether double
 
 Right click on the 'Scan' button to set the device properties.
 
+'Ctrl - right' click on the 'Scan' button to define stamps.
+
+Press 'Esc' to cancel and reset a scan project.
+
 Outputs:
 
  - a single PDF file with the number of requested pages
