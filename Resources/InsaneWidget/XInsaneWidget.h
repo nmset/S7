@@ -67,6 +67,7 @@ public:
   void EnableScanButton(bool enable); // For CallAfter.
   void Setup(wxConfig * config, TimeredStatusBar * sb);
   bool IsScannerDiscoveryRunning();
+  bool IsScanning();
 private:
   wxConfig * m_config;
   wxWeakRef<TimeredStatusBar> m_sb;

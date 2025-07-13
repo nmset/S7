@@ -591,3 +591,10 @@ bool XInsaneWidget::IsScannerDiscoveryRunning()
     return false;
   return m_backgroundDiscovery->IsRunning();
 }
+
+bool XInsaneWidget::IsScanning()
+{
+  if (!m_scanProject)
+    return false;
+  return m_scanProject->GetWip();
+}
