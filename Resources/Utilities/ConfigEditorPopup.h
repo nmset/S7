@@ -27,9 +27,9 @@ public:
   virtual ~ConfigEditorPopup();
   PopupTransientWindow* CreatePopup();
   void ShowPopup();
-  wxCheckBox* AddCheckBox ( const wxString& label, const wxString& configPath );
-  wxSpinCtrl* AddSpinCtrl ( const wxString& label, const wxString& configPath );
-  wxTextCtrl * AddTextCtrl ( const wxString& label, const wxString& configPath );
+  wxCheckBox* AddCheckBox(const wxString& label, const wxString& configPath, bool * clientVar = nullptr);
+  wxSpinCtrl* AddSpinCtrl ( const wxString& label, const wxString& configPath, int * clientVar = nullptr );
+  wxTextCtrl * AddTextCtrl ( const wxString& label, const wxString& configPath, wxString * clientVar = nullptr );
 
 private:
   wxConfig * m_config = nullptr;

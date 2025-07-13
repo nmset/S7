@@ -83,6 +83,9 @@ private:
   std::unique_ptr<InsaneWorker> m_insaneWorker;
   std::unique_ptr<BackgroundScannerDiscoveryEVH> m_backgroundScannerDiscoveryEvh;
   std::unique_ptr<ScanProjectHandler> m_scanProject;
+
+  bool m_doubleSided = false;
+  int m_total = 1;
   
   void OnLblNewDocRightClick ( wxMouseEvent& evt );
   void OnTxtNewDocKeyPressed ( wxKeyEvent& evt );

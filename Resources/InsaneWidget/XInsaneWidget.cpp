@@ -400,6 +400,10 @@ XInsaneWidget::~XInsaneWidget() = default; // Important for mixing unique_ptr an
 
 void XInsaneWidget::Setup()
 {
+  // Restore known last values.
+  m_doubleSided = m_config->ReadBool("/Scanner/DoubleSided", false);
+  m_total = m_config->ReadLong("/Scanner/Total", 1);
+
   lblNewDoc->Bind ( wxEVT_RIGHT_UP, &XInsaneWidget::OnLblNewDocRightClick, this );
   txtNewDoc->Bind ( wxEVT_KEY_UP, &XInsaneWidget::OnTxtNewDocKeyPressed, this );
   
@@ -445,9 +449,9 @@ void XInsaneWidget::OnLblNewDocRightClick ( wxMouseEvent& evt )
     evt.Skip();
     return;
   }
-  wxCheckBox * cb = m_pageStack->AddCheckBox (_("Double sided:"),_T("/Scanner/DoubleSided") );
+  wxCheckBox * cb = m_pageStack->AddCheckBox (_("Double sided:"),_T("/Scanner/DoubleSided"), &m_doubleSided );
   cb->SetToolTip (_("Scan all front faces first, then all back faces in reverse order.") );
-  wxSpinCtrl * spn = m_pageStack->AddSpinCtrl (_("Total:"),_T("/Scanner/Total") );
+  wxSpinCtrl * spn = m_pageStack->AddSpinCtrl (_("Total:"),_T("/Scanner/Total"), &m_total );
   spn->SetRange ( 1, 50 );
   spn->SetToolTip (_("Total number of sides to scan (not total number of sheets).") );
   m_pageStack->ShowPopup();
@@ -515,15 +519,7 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
   }
   const uint outputType = m_scannerWidget->GetScannerOutputType();
   bool adf = false;
-  bool doubleSided = false;
-  uint total = 1;
-  wxString paperSize = _T("A4");
-  if (m_config)
-  {
-    doubleSided = m_config->ReadBool("/Scanner/DoubleSided", false);
-    total = m_config->ReadLong("/Scanner/Total", 1);
-    m_config->Read("/Scanner/Last/PaperSize", &paperSize, "A4");
-  }
+  wxString paperSize = m_scannerWidget->GetPaperSize();
 
   wxFileName destFile(dest);
   const string deviceId = m_scannerWidget->GetCurrentDeviceId().ToStdString();
@@ -545,8 +541,8 @@ void XInsaneWidget::OnBtnScanClick ( wxMouseEvent& evt )
     m_scanProject->SetResolution(resolution);
     m_scanProject->SetOutputType(outputType);
     m_scanProject->SetPaperSize(paperSize);
-    m_scanProject->SetDoubleSided(doubleSided);
-    m_scanProject->SetTotalNumberOfSides(total);
+    m_scanProject->SetDoubleSided(m_doubleSided);
+    m_scanProject->SetTotalNumberOfSides((uint) m_total);
     if (m_stampWidgets)
     {
       m_stampDescriptors = m_stampWidgets->GetStampDescriptors();

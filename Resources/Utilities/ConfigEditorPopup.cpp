@@ -30,7 +30,8 @@ PopupTransientWindow* ConfigEditorPopup::CreatePopup()
   return m_popup;
 }
 
-wxCheckBox* ConfigEditorPopup::AddCheckBox ( const wxString& label, const wxString& configPath )
+wxCheckBox* ConfigEditorPopup::AddCheckBox ( const wxString& label, const wxString& configPath,
+                                    bool * clientVar)
 {
   wxASSERT_MSG ( ( m_config != nullptr ),_T("CONFIG IS nullptr") );
   wxString * cPath = new wxString ( configPath );
@@ -38,13 +39,22 @@ wxCheckBox* ConfigEditorPopup::AddCheckBox ( const wxString& label, const wxStri
   m_flxsz->Add ( lbl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 0 );
   wxCheckBox * cb = new wxCheckBox ( m_pan, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
   m_flxsz->Add ( cb, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 0 );
-  cb->SetValue ( m_config->ReadBool ( configPath, false ) );
+  cb->SetValue ( (!clientVar) ? m_config->ReadBool ( configPath, false ) : *clientVar);
   cb->SetClientData ( cPath );
   cb->Bind ( wxEVT_DESTROY, &ConfigEditorPopup::OnControlDestroy, this );
+  if (clientVar)
+  {
+    cb->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, [cb, clientVar] (wxCommandEvent& evt)
+    {
+      *clientVar = cb->GetValue();
+    }
+    );
+  }
   return cb;
 }
 
-wxSpinCtrl* ConfigEditorPopup::AddSpinCtrl ( const wxString& label, const wxString& configPath )
+wxSpinCtrl* ConfigEditorPopup::AddSpinCtrl ( const wxString& label, const wxString& configPath,
+                                            int * clientVar)
 {
   wxASSERT_MSG ( ( m_config != nullptr ),_T("CONFIG IS nullptr") );
   wxString * cPath = new wxString ( configPath );
@@ -52,13 +62,22 @@ wxSpinCtrl* ConfigEditorPopup::AddSpinCtrl ( const wxString& label, const wxStri
   m_flxsz->Add ( lbl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxGROW | wxALL, 0 );
   wxSpinCtrl * spn = new wxSpinCtrl ( m_pan, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS | wxALIGN_RIGHT, -100, 100 );
   m_flxsz->Add ( spn, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 0 );
-  spn->SetValue ( ( int ) m_config->ReadLong ( configPath, 0 ) );
+  spn->SetValue ((!clientVar) ? ( int ) m_config->ReadLong ( configPath, 0 ) : *clientVar);
   spn->SetClientData ( cPath );
   spn->Bind ( wxEVT_DESTROY, &ConfigEditorPopup::OnControlDestroy, this );
+  if (clientVar)
+  {
+    spn->Bind(wxEVT_COMMAND_SPINCTRL_UPDATED, [spn, clientVar] (wxSpinEvent& evt)
+    {
+      *clientVar = spn->GetValue();
+    }
+    );
+  }
   return spn;
 }
 
-wxTextCtrl* ConfigEditorPopup::AddTextCtrl ( const wxString& label, const wxString& configPath )
+wxTextCtrl* ConfigEditorPopup::AddTextCtrl ( const wxString& label, const wxString& configPath,
+                                      wxString * clientVar)
 {
   wxASSERT_MSG ( ( m_config != nullptr ),_T("CONFIG IS nullptr") );
   wxString * cPath = new wxString ( configPath );
@@ -66,9 +85,17 @@ wxTextCtrl* ConfigEditorPopup::AddTextCtrl ( const wxString& label, const wxStri
   m_flxsz->Add ( lbl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxGROW | wxALL, 0 );
   wxTextCtrl * txt = new wxTextCtrl ( m_pan, wxID_ANY );
   m_flxsz->Add ( txt, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 0 );
-  txt->SetValue ( m_config->Read ( configPath, wxEmptyString ) );
+  txt->SetValue ( (!clientVar) ? m_config->Read ( configPath, wxEmptyString ) : *clientVar );
   txt->SetClientData ( cPath );
   txt->Bind ( wxEVT_DESTROY, &ConfigEditorPopup::OnControlDestroy, this );
+  if (clientVar)
+  {
+    txt->Bind(wxEVT_COMMAND_TEXT_UPDATED, [txt, clientVar] (wxCommandEvent& evt)
+    {
+      *clientVar = txt->GetValue();
+    }
+    );
+  }
   return txt;
 }
 
