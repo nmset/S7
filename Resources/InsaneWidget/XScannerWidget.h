@@ -35,18 +35,16 @@ class XScannerWidget : public ScannerWidget
   DECLARE_DYNAMIC_CLASS( XScannerWidget )
   friend class BackgroundScannerDiscovery;
 public:
-  XScannerWidget() {};
-  ~XScannerWidget();
-  
+  XScannerWidget();
+  virtual ~XScannerWidget();
 
-  XScannerWidget ( wxWindow* parent, TimeredStatusBar * sb,
-                   InsaneWorker * insaneWorker,
-                   wxWindowID id = wxID_ANY,
+  XScannerWidget ( wxWindow* parent, wxWindowID id = wxID_ANY,
                    const wxPoint& pos = wxDefaultPosition,
                    const wxSize& size = SYMBOL_SCANNERWIDGET_SIZE,
                    long int style = SYMBOL_SCANNERWIDGET_STYLE );
 
-  void SetConfig ( wxConfig * config );
+  void Setup ( wxConfig* config, InsaneWorker * insaneWorker,
+               TimeredStatusBar * sb = nullptr );
   bool FindDevices ( bool async = false );
   wxString GetCurrentDeviceId() const;
   wxString GetScannerMode() const

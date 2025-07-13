@@ -60,12 +60,12 @@ class XInsaneWidget : public InsaneWidget
   DECLARE_DYNAMIC_CLASS( XInsaneWidget )
 public:
   virtual ~XInsaneWidget();
-  XInsaneWidget( wxWindow* parent, TimeredStatusBar * sb,  wxConfig * config, wxWindowID id = SYMBOL_INSANEWIDGET_IDNAME, const wxPoint& pos = SYMBOL_INSANEWIDGET_POSITION, const wxSize& size = SYMBOL_INSANEWIDGET_SIZE, long style = SYMBOL_INSANEWIDGET_STYLE );
+  XInsaneWidget( wxWindow* parent, wxWindowID id = SYMBOL_INSANEWIDGET_IDNAME, const wxPoint& pos = SYMBOL_INSANEWIDGET_POSITION, const wxSize& size = SYMBOL_INSANEWIDGET_SIZE, long style = SYMBOL_INSANEWIDGET_STYLE );
 
   void ResetScanProject();
   void CancelScanning();
   void EnableScanButton(bool enable); // For CallAfter.
-  void Setup();
+  void Setup(wxConfig * config, TimeredStatusBar * sb);
 private:
   wxConfig * m_config;
   wxWeakRef<TimeredStatusBar> m_sb;

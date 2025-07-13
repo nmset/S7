@@ -18,19 +18,30 @@ using namespace std;
 
 IMPLEMENT_CLASS( XScannerWidget, ScannerWidget )
 
+XScannerWidget::XScannerWidget() : ScannerWidget()
+{}
+
 XScannerWidget::~XScannerWidget()
 {}
 
-XScannerWidget::XScannerWidget ( wxWindow* parent,  TimeredStatusBar * sb,
-                                 InsaneWorker * insaneWorker,
-                                 wxWindowID id, const wxPoint& pos, const wxSize& size, long int style )
-  : ScannerWidget ( parent, id, pos, size, style )
+XScannerWidget::XScannerWidget ( wxWindow* parent, wxWindowID id,
+                                 const wxPoint& pos, const wxSize& size, long int style )
+: ScannerWidget ( parent, id, pos, size, style )
+{}
+
+void XScannerWidget::Setup ( wxConfig* config, InsaneWorker * insaneWorker,
+                             TimeredStatusBar * sb)
 {
-  UpdateExtensionsMap();
+  wxASSERT_MSG ( ( config != nullptr ),_T("config IS nullptr") );
+  wxASSERT_MSG ( ( insaneWorker != nullptr ),_T("insaneWorker IS nullptr") );
+  m_config = config;
   m_sb = sb;
   m_insaneWorker = insaneWorker;
+
+  UpdateExtensionsMap();
   if (m_insaneWorker)
     m_insaneWorkerEvh = m_insaneWorker->GetEventHandler();
+
   cmbOutputType->Append (Extensions[PDF]); // Use the file extension and the enum index without client data.
 #if wxUSE_LIBPNG
   cmbOutputType->Append (Extensions[PNG]);
@@ -46,7 +57,7 @@ XScannerWidget::XScannerWidget ( wxWindow* parent,  TimeredStatusBar * sb,
 #endif
   // Paper sizes handled by podofo.
   cmbPaperSize->Append(wxArrayString({"A0", "A1", "A2", "A3", "A4", "A5", "A6",
-                                    "Letter", "Legal", "Tabloid"}));
+    "Letter", "Legal", "Tabloid"}));
   
   btnRefreshDevices->Bind ( wxEVT_COMMAND_BUTTON_CLICKED, &XScannerWidget::OnButtonRefreshDevices, this );
   cmbDevices->Bind ( wxEVT_COMMAND_COMBOBOX_SELECTED, &XScannerWidget::OnDeviceSelected, this );
@@ -56,6 +67,20 @@ XScannerWidget::XScannerWidget ( wxWindow* parent,  TimeredStatusBar * sb,
   cmbResolution->Bind ( wxEVT_COMMAND_COMBOBOX_SELECTED, &XScannerWidget::OnResolutionSelected, this );
   cmbPaperSize->Bind ( wxEVT_COMMAND_COMBOBOX_SELECTED, &XScannerWidget::OnPaperSizeSelected, this );
   GetParent()->Bind ( wxEVT_SHOW, &XScannerWidget::OnActivated, this );
+
+  wxString lastImageType;
+  m_config->Read (_T("/Scanner/Last/OutputType"), &lastImageType );
+  if ( cmbOutputType->FindString ( lastImageType, true ) != wxNOT_FOUND )
+    cmbOutputType->SetStringSelection ( lastImageType );
+  else
+    cmbOutputType->Select(0);
+
+  wxString lastPaperSize;
+  m_config->Read (_T("/Scanner/Last/PaperSize"), &lastPaperSize );
+  if ( cmbPaperSize->FindString ( lastPaperSize, true ) != wxNOT_FOUND )
+    cmbPaperSize->SetStringSelection ( lastPaperSize );
+  else
+    cmbPaperSize->Select(4);
 }
 
 bool XScannerWidget::FindDevices ( bool async )
@@ -114,28 +139,6 @@ void XScannerWidget::OnButtonRefreshDevices ( wxCommandEvent& evt )
   evt.Skip();
   btnRefreshDevices->Enable ( true );
 }
-
-void XScannerWidget::SetConfig ( wxFileConfig* config )
-{
-  m_config = config;
-  if ( !m_config )
-    return;
-
-  wxString lastImageType;
-  m_config->Read (_T("/Scanner/Last/OutputType"), &lastImageType );
-  if ( cmbOutputType->FindString ( lastImageType, true ) != wxNOT_FOUND )
-    cmbOutputType->SetStringSelection ( lastImageType );
-  else
-    cmbOutputType->Select(0);
-
-  wxString lastPaperSize;
-  m_config->Read (_T("/Scanner/Last/PaperSize"), &lastPaperSize );
-  if ( cmbPaperSize->FindString ( lastPaperSize, true ) != wxNOT_FOUND )
-    cmbPaperSize->SetStringSelection ( lastPaperSize );
-  else
-    cmbPaperSize->Select(4);
-}
-
 
 void XScannerWidget::OnDeviceSelected ( wxCommandEvent& evt )
 {

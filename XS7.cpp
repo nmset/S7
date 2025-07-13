@@ -29,8 +29,8 @@ void XS7::Setup(wxConfig * config)
   TimeredStatusBar * sb = new TimeredStatusBar(this);
   SetStatusBar(sb);
   
-  m_insaneWidget = new XInsaneWidget(panMain, sb, m_config);
-  m_insaneWidget->Setup();
+  m_insaneWidget = new XInsaneWidget(panMain);
+  m_insaneWidget->Setup(m_config, sb);
   szMain->Insert(2, m_insaneWidget, 1, wxGROW | wxALL);
   
   dpkDestination->Bind ( wxEVT_DIRPICKER_CHANGED, &XS7::OnDpkRepositoryChange, this );

@@ -388,18 +388,18 @@ private:
 // ----------------------------------------------------------------------------
 IMPLEMENT_CLASS( XInsaneWidget, InsaneWidget )
 
-XInsaneWidget::XInsaneWidget(wxWindow* parent, TimeredStatusBar * sb, wxConfig * config, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+XInsaneWidget::XInsaneWidget(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 : InsaneWidget(parent, id, pos, size, style)
+{}
+
+XInsaneWidget::~XInsaneWidget() = default; // Important for mixing unique_ptr and PIMPL.
+
+void XInsaneWidget::Setup(wxConfig * config, TimeredStatusBar * sb)
 {
   UpdateExtensionsMap();
   m_config = config;
   m_sb = sb;
-}
 
-XInsaneWidget::~XInsaneWidget() = default; // Important for mixing unique_ptr and PIMPL.
-
-void XInsaneWidget::Setup()
-{
   // Restore known last values.
   m_doubleSided = m_config->ReadBool("/Scanner/DoubleSided", false);
   m_total = m_config->ReadLong("/Scanner/Total", 1);
@@ -416,8 +416,8 @@ void XInsaneWidget::Setup()
   m_ptwScannerWidget->Show ( false );
   m_scanProject = std::make_unique<ScanProjectHandler>(this, m_sb);
   m_insaneWorker = std::make_unique<InsaneWorker>(m_scanProject.get());
-  m_scannerWidget = std::make_unique<XScannerWidget> ( m_ptwScannerWidget.get(), m_sb, m_insaneWorker.get() );
-  m_scannerWidget->SetConfig ( m_config );
+  m_scannerWidget = std::make_unique<XScannerWidget> (m_ptwScannerWidget.get());
+  m_scannerWidget->Setup ( m_config, m_insaneWorker.get(), m_sb );
 
   btnScan->Enable(false);
   btnScan->Bind ( wxEVT_RIGHT_UP, &XInsaneWidget::OnBtnScanRightClick, this );
