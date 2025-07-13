@@ -22,18 +22,12 @@ public:
   XS7(wxWindow* parent, wxWindowID id = SYMBOL_S7_IDNAME, const wxString& caption = SYMBOL_S7_TITLE,
       const wxPoint& pos = SYMBOL_S7_POSITION, const wxSize& size = SYMBOL_S7_SIZE, long style = SYMBOL_S7_STYLE );
   virtual ~XS7();
-  bool ParseCmdLine();
-  void Setup();
+
+  void Setup(wxConfig * config);
 
 private:
-  std::unique_ptr<wxConfig> m_config = nullptr;
+  wxConfig * m_config = nullptr;
   XInsaneWidget * m_insaneWidget = nullptr;
-
-  /*
-   * An optional tag for wxConfig files. This allows using different profiles
-   * by specifying the -c command line option.
-   */
-  wxString m_configTag;
 
   void OnDpkRepositoryChange ( wxFileDirPickerEvent& evt );
   void OnDpkDoubleClick ( wxMouseEvent& evt );

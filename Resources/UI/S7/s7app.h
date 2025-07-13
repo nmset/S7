@@ -21,6 +21,8 @@
 #include "wx/image.h"
 ////@end includes
 
+#include "wx/config.h"
+
 /*!
  * Forward declarations
  */
@@ -66,6 +68,15 @@ public:
 ////@end S7App member variables
 private:
     wxLocale m_locale;
+    std::unique_ptr<wxConfig> m_config = nullptr;
+    /*
+     * An optional tag for wxConfig files. This allows using different profiles
+     * by specifying the -c command line option.
+     */
+    wxString m_configTag;
+
+    bool ParseCmdLine();
+    void SetConfig();
 };
 
 /*!

@@ -23,48 +23,13 @@ XS7::XS7(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint
 : S7(parent, id, caption, pos, size, style)
 {}
 
-bool XS7::ParseCmdLine()
+void XS7::Setup(wxConfig * config)
 {
-  wxCmdLineParser p;
-  p.SetCmdLine ( wxApp::GetInstance()->argc, wxApp::GetInstance()->argv );
-  p.SetSwitchChars ( _T ( "-" ) );
-  p.AddOption ( _T ( "c" ), wxEmptyString, _ ( "Config file tag." ) );
-  p.AddSwitch ( _T ( "v" ), wxEmptyString, _ ( "Show version and quit." ) );
-  p.AddSwitch ( _T ( "h" ), wxEmptyString, _ ( "Show help and quit." ) );
-  p.Parse ( false );
-  if ( p.Found ( _T ( "c" ) ) )
-  {
-    p.Found ( _T ( "c" ), &m_configTag );
-    return true;
-  }
-  if ( p.Found ( _T ( "h" ) ) )
-  {
-    p.Usage();
-    return false; //Exit code is 255, not clean.
-  }
-  if ( p.Found ( _T ( "v" ) ) )
-  {
-    cout << ( _APPNAME_ + _ ( " - version " ) + to_string(_APPVERSION_) ) << endl;
-    return false;
-  }
-  return true;
-}
-
-void XS7::Setup()
-{
-  const wxString configDir = wxFileConfig::GetLocalFile ( _APPNAME_, wxCONFIG_USE_SUBDIR ).GetPath();
-  if ( !wxFileName::Exists ( configDir ) )
-    wxFileName::Mkdir ( configDir );
-
-  const wxString configBaseName = m_configTag.IsEmpty()
-                        ? _APPNAME_
-                        : _APPNAME_ + wxString("-") + m_configTag;
-  m_config = std::make_unique<wxFileConfig>(_APPNAME_, _T("SET"), configBaseName,
-                                            wxEmptyString, wxCONFIG_USE_SUBDIR);
+  m_config = config;
   TimeredStatusBar * sb = new TimeredStatusBar(this);
   SetStatusBar(sb);
   
-  m_insaneWidget = new XInsaneWidget(panMain, sb, m_config.get());
+  m_insaneWidget = new XInsaneWidget(panMain, sb, m_config);
   m_insaneWidget->Setup();
   szMain->Insert(2, m_insaneWidget, 1, wxGROW | wxALL);
   
@@ -76,7 +41,7 @@ void XS7::Setup()
 
   txtBasename->SetValidator(*MiscTools::MakeFileNameValidator(false));
   txtBasename->Bind(wxEVT_LEFT_UP, &XS7::OnAbout, this);
-  MiscTools::RestoreSizePos(m_config.get(), this, wxString("/" + wxString(_APPNAME_)));
+  MiscTools::RestoreSizePos(m_config, this, wxString("/" + wxString(_APPNAME_)));
 
   S7::SetTitle(wxString(_APPNAME_) + " - version " +  to_string(_APPVERSION_));
 
@@ -89,7 +54,7 @@ void XS7::Setup()
 XS7::~XS7()
 {
   if (m_config)
-    MiscTools::SaveSizePos(m_config.get(), this, wxString("/") + _APPNAME_);
+    MiscTools::SaveSizePos(m_config, this, wxString("/") + _APPNAME_);
 }
 
 void XS7::OnDpkRepositoryChange ( wxFileDirPickerEvent& evt )

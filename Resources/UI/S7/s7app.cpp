@@ -26,6 +26,7 @@
 #include <globals.h>
 #include "s7app.h"
 #include <XS7.h>
+#include <wx/cmdline.h>
 
 ////@begin XPM images
 
@@ -40,6 +41,7 @@
 IMPLEMENT_APP( S7App )
 ////@end implement app
 
+using namespace std;
 
 /*
  * S7App type definition
@@ -122,15 +124,16 @@ bool S7App::OnInit()
         translations->AddCatalog(_APPNAME_);
     }
 
+    bool res = ParseCmdLine();
+    if ( !res )
+        return res;
+
+    SetConfig();
     XS7 * appWindow = new XS7(nullptr);
     SetTopWindow(appWindow);
     appWindow->Show ( false );
-    bool res = appWindow->ParseCmdLine();
-    if ( res )
-    {
-        appWindow->Setup();
-        appWindow->Show();
-    }
+    appWindow->Setup(m_config.get());
+    appWindow->Show();
     
     return res;
 }
@@ -147,3 +150,42 @@ int S7App::OnExit()
 ////@end S7App cleanup
 }
 
+bool S7App::ParseCmdLine()
+{
+    wxCmdLineParser p;
+    p.SetCmdLine ( wxApp::GetInstance()->argc, wxApp::GetInstance()->argv );
+    p.SetSwitchChars ( _T ( "-" ) );
+    p.AddOption ( _T ( "c" ), wxEmptyString, _ ( "Config file tag." ) );
+    p.AddSwitch ( _T ( "v" ), wxEmptyString, _ ( "Show version and quit." ) );
+    p.AddSwitch ( _T ( "h" ), wxEmptyString, _ ( "Show help and quit." ) );
+    p.Parse ( false );
+    if ( p.Found ( _T ( "c" ) ) )
+    {
+        p.Found ( _T ( "c" ), &m_configTag );
+        return true;
+    }
+    if ( p.Found ( _T ( "h" ) ) )
+    {
+        p.Usage();
+        return false; //Exit code is 255, not clean.
+    }
+    if ( p.Found ( _T ( "v" ) ) )
+    {
+        cout << ( _APPNAME_ + _ ( " - version " ) + to_string(_APPVERSION_) ) << endl;
+        return false;
+    }
+    return true;
+}
+
+void S7App::SetConfig()
+{
+    const wxString configDir = wxFileConfig::GetLocalFile ( _APPNAME_, wxCONFIG_USE_SUBDIR ).GetPath();
+    if ( !wxFileName::Exists ( configDir ) )
+        wxFileName::Mkdir ( configDir );
+    
+    const wxString configBaseName = m_configTag.IsEmpty()
+                                ? _APPNAME_
+                                : _APPNAME_ + wxString("-") + m_configTag;
+    m_config = std::make_unique<wxFileConfig>(_APPNAME_, _T("SET"), configBaseName,
+                                              wxEmptyString, wxCONFIG_USE_SUBDIR);
+}
