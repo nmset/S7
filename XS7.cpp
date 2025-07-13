@@ -105,6 +105,18 @@ void XS7::OnAppKeyPressed(wxKeyEvent& evt)
   {
     if (evt.GetKeyCode() == 'Q')
       Close();
+    // Create a new instance of the application window.
+    if (evt.GetKeyCode() == 'N')
+    {
+      static int instanceId = 0;
+      instanceId++;
+      XS7 * instance = new XS7(nullptr, wxID_ANY);
+      instance->Show(false);
+      instance->Setup(m_config);
+      const wxString title = instance->GetTitle() + _T(" (#") + to_string(instanceId) + _T(")");
+      instance->SetTitle(title);
+      instance->Show(true);
+    }
   }
   if (evt.GetKeyCode() == WXK_ESCAPE)
     if (m_insaneWidget)

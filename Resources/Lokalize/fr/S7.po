@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-11 21:35+0200\n"
+"POT-Creation-Date: 2025-07-13 21:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,8 +56,7 @@ msgstr ""
 "déterminée par le format de sortie."
 
 #: ../../Resources/InsaneWidget/UI/InsaneWidget.cpp:139
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:188
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:302
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:182
 msgid "Scan"
 msgstr "Numériser"
 
@@ -92,66 +91,66 @@ msgstr "Mode de numérisation"
 msgid "Scan resolution"
 msgstr "Résolution de la numérisation"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:171
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:208
 msgid "A scan library error occurred."
 msgstr "Une erreur de bibliothèque est survenue."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:177
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:216
 msgid "A general error occurred."
 msgstr "Une erreur générale est survenue."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:181
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:221
 msgid "A session read error occurred."
 msgstr "Une erreur de lecture est survenue."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:190
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:233
 msgid "Session cancelled."
 msgstr "Session annulée."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:208
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:250
 msgid "Scanning: "
 msgstr "Numérisation :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:210
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:252
 msgid "Front face: "
 msgstr "Recto :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:212
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:254
 msgid "Back face: "
 msgstr "Verso :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:216
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:258
 msgid ". Turn the whole stack of pages."
 msgstr ". Retournez toute la pile de pages."
 
 msgid "Failed to create PNG image."
 msgstr "Échec de création d'image PNG."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:248
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:289
 msgid "Wrong paper size: "
 msgstr "Mauvaise taille de papier :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:248
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:289
 msgid "; using A4."
 msgstr "; utilisation du format A4."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:255
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:296
 msgid "Failed to add page to PDF document."
 msgstr "Échec d'ajout de page au document PDF."
 
 msgid "Unhandled output file format."
 msgstr "Format de fichier de sortie non pris en charge."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:298
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:339
 msgid "Finished."
 msgstr "Terminé."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:398
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:452
 msgid "Scan all front faces first, then all back faces in reverse order."
 msgstr ""
 "Numériser tous les faces recto, puis toutes les faces verso en ordre inverse."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:401
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:455
 msgid "Total number of sides to scan (not total number of sheets)."
 msgstr ""
 "Nombre total de faces à numériser (et non pas le nombre total de feuilles)."
@@ -164,18 +163,18 @@ msgstr "NUM"
 msgid "CAPS"
 msgstr "CAPS"
 
-#: ../../Resources/InsaneWidget/XScannerWidget.cpp:64
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:89
 msgid "Searching for devices..."
 msgstr "Recherche de périphériques..."
 
-#: ../../Resources/InsaneWidget/XScannerWidget.cpp:67
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:92
 msgid "Could not initialise insane api."
 msgstr "Échec d'initialisation de la bibliothèque 'insane'."
 
 msgid "'Shift + left' click'' to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../XS7.cpp:107
+#: ../../XS7.cpp:95
 msgid "Could not launch default file manager"
 msgstr "Échec de lancement du gestionnaire de fichier par défaut."
 
@@ -231,19 +230,19 @@ msgstr "Résolution :"
 msgid "Paper size:"
 msgstr "Format de page :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:397
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:451
 msgid "Double sided:"
 msgstr "Recto-verso :"
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:399
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:453
 msgid "Total:"
 msgstr "Total :"
 
-#: ../../XS7.cpp:84
+#: ../../XS7.cpp:49
 msgid "'Shift + left' click to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../XS7.cpp:47 ../../XS7.cpp:164
+#: ../../Resources/UI/S7/s7app.cpp:174 ../../XS7.cpp:164
 msgid " - version "
 msgstr " - version "
 
@@ -255,23 +254,23 @@ msgstr ""
 ", utilisant InsaneWidget.\n"
 "\n"
 
-#: ../../Resources/InsaneWidget/XScannerWidget.cpp:87
+#: ../../Resources/InsaneWidget/XScannerWidget.cpp:112
 msgid " device(s) found."
 msgstr " périphériques trouvé(s)."
 
-#: ../../XS7.cpp:31
+#: ../../Resources/UI/S7/s7app.cpp:158
 msgid "Config file tag."
 msgstr "Suffixe du fichier de configuration."
 
-#: ../../XS7.cpp:32
+#: ../../Resources/UI/S7/s7app.cpp:159
 msgid "Show version and quit."
 msgstr "Afficher la version et quitter."
 
-#: ../../XS7.cpp:33
+#: ../../Resources/UI/S7/s7app.cpp:160
 msgid "Show help and quit."
 msgstr "Afficher l'aide et quitter."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:461
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:515
 msgid "Destination file missing."
 msgstr "Fichier de destination manquant."
 
@@ -309,7 +308,7 @@ msgstr "Échec de lecture du fichier brut."
 msgid "Unhandled output image format."
 msgstr "Format de fichier d'image en sortie non pris en charge."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:229
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:270
 msgid "Failed to create output image."
 msgstr "Échec de création de l'image de sortie."
 
@@ -383,7 +382,7 @@ msgstr ""
 "'Clic droit' pour afficher les options du numériseur.\n"
 "'Ctrl + Clic droit' pour définir un tampon."
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:423
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:477
 msgid "Stamps"
 msgstr "Tampons"
 
@@ -424,6 +423,10 @@ msgid ""
 "Check for a completely transparent background and for a transparent text."
 msgstr "Activez la transparence du texte et de l'arrière-plan. "
 
-#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:511
+#: ../../Resources/InsaneWidget/XInsaneWidget.cpp:189
 msgid "Cancel"
 msgstr "Annuler"
+
+#: ../../XS7.cpp:74
+msgid "Veto: scanner discovery is running."
+msgstr "Veto : recherche de périphériques en cours."
