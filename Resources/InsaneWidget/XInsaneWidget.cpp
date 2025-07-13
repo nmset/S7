@@ -422,10 +422,9 @@ void XInsaneWidget::Setup(wxConfig * config, TimeredStatusBar * sb)
   btnScan->Enable(false);
   btnScan->Bind ( wxEVT_RIGHT_UP, &XInsaneWidget::OnBtnScanRightClick, this );
   btnScan->Bind ( wxEVT_LEFT_UP, &XInsaneWidget::OnBtnScanClick, this );
-  m_backgroundScannerDiscoveryEvh = std::make_unique<BackgroundScannerDiscoveryEVH>(this);
-  BackgroundScannerDiscovery * backgroundDiscovery = new BackgroundScannerDiscovery ( m_scannerWidget.get(),
-                                                                                      m_backgroundScannerDiscoveryEvh.get());
-  backgroundDiscovery->Run();
+  m_backgroundDiscovery = new BackgroundScannerDiscovery ( m_scannerWidget.get(),
+                                                          new BackgroundScannerDiscoveryEVH(this)); // Takes ownership.
+  m_backgroundDiscovery->Run();
 }
 
 
@@ -581,5 +580,14 @@ void XInsaneWidget::CancelScanning()
 
 void XInsaneWidget::EnableScanButton(bool enable)
 {
+  // Called from BackgroundScannerDiscoveryEVH::Done() only;
   btnScan->Enable(enable);
+  m_backgroundDiscovery = nullptr;
+}
+
+bool XInsaneWidget::IsScannerDiscoveryRunning()
+{
+  if (!m_backgroundDiscovery)
+    return false;
+  return m_backgroundDiscovery->IsRunning();
 }

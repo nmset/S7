@@ -311,7 +311,10 @@ wxThread::ExitCode BackgroundScannerDiscovery::Entry()
     evt.SetShow ( true );
     m_owner->OnActivated ( evt );
     if (m_evh)
+    {
       m_evh->OnDone();
+      wxDELETE(m_evh);
+    }
   }
   return ( wxThread::ExitCode ) 0;
 }
@@ -320,4 +323,6 @@ wxThread::ExitCode BackgroundScannerDiscovery::Entry()
 
 void BackgroundScannerDiscoveryEvent::OnDone()
 {}
+
+BackgroundScannerDiscoveryEvent::~BackgroundScannerDiscoveryEvent() = default;
 

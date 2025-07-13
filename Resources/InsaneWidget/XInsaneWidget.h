@@ -23,7 +23,7 @@
 #include <memory>
 #include <vector>
 
-class BackgroundScannerDiscoveryEVH;
+class BackgroundScannerDiscovery; // Is a wxThread.
 class ScanProjectHandler; // An event handler extending InsaneWorkerEvent.
 class XStampWidget;
 struct StampDescriptor;
@@ -66,6 +66,7 @@ public:
   void CancelScanning();
   void EnableScanButton(bool enable); // For CallAfter.
   void Setup(wxConfig * config, TimeredStatusBar * sb);
+  bool IsScannerDiscoveryRunning();
 private:
   wxConfig * m_config;
   wxWeakRef<TimeredStatusBar> m_sb;
@@ -81,7 +82,7 @@ private:
   // Available devices and minimal options.
   std::unique_ptr<XScannerWidget> m_scannerWidget;
   std::unique_ptr<InsaneWorker> m_insaneWorker;
-  std::unique_ptr<BackgroundScannerDiscoveryEVH> m_backgroundScannerDiscoveryEvh;
+  BackgroundScannerDiscovery * m_backgroundDiscovery;
   std::unique_ptr<ScanProjectHandler> m_scanProject;
 
   bool m_doubleSided = false;

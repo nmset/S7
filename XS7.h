@@ -33,6 +33,7 @@ private:
   void OnDpkDoubleClick ( wxMouseEvent& evt );
   void OnAppKeyPressed(wxKeyEvent& evt);
   void OnNewDocLeftClick ( wxMouseEvent& evt ); // wxStaticText in m_insaneWidget.
+  void OnClose(wxCloseEvent& evt);
   void OnAbout(wxMouseEvent& evt);
 };
 

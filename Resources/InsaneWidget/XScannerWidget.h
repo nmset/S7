@@ -99,7 +99,7 @@ public:
   BackgroundScannerDiscovery ( XScannerWidget * owner, BackgroundScannerDiscoveryEvent * evh )
   {
     m_owner = owner;
-    m_evh = evh;
+    m_evh = evh; // Owned here.
   }
   virtual ~BackgroundScannerDiscovery() {};
   virtual ExitCode Entry();
@@ -112,6 +112,7 @@ class BackgroundScannerDiscoveryEvent
 {
 public:
   virtual void OnDone();
+  virtual ~BackgroundScannerDiscoveryEvent();
 
 };
 

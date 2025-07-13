@@ -49,6 +49,8 @@ void XS7::Setup(wxConfig * config)
   wxString fixedTip = _("'Shift + left' click to generate a new destination file name.");
   fixedTip += _T("\n") + m_insaneWidget->lblNewDoc->GetToolTipText();
   m_insaneWidget->lblNewDoc->SetToolTip(fixedTip);
+
+  Bind(wxEVT_CLOSE_WINDOW, &XS7::OnClose, this);
 }
 
 XS7::~XS7()
@@ -56,6 +58,27 @@ XS7::~XS7()
   if (m_config)
     MiscTools::SaveSizePos(m_config, this, wxString("/") + _APPNAME_);
 }
+
+void XS7::OnClose(wxCloseEvent& evt)
+{
+  if (!m_insaneWidget)
+  {
+    evt.Skip();
+    return;
+  }
+  if (m_insaneWidget->IsScannerDiscoveryRunning())
+  {
+    evt.Veto();
+    TimeredStatusBar * sb = static_cast<TimeredStatusBar*> (GetStatusBar());
+    if (sb)
+      sb->SetTransientText(_("Veto: scanner discovery is running."));
+    evt.Skip(false);
+    return;
+  }
+  evt.Skip();
+  
+}
+
 
 void XS7::OnDpkRepositoryChange ( wxFileDirPickerEvent& evt )
 {
