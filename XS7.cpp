@@ -75,6 +75,12 @@ void XS7::OnClose(wxCloseEvent& evt)
     evt.Skip(false);
     return;
   }
+  if(m_insaneWidget->IsScanning())
+  {
+    m_insaneWidget->CancelScanning();
+    evt.Skip(false); // The window remains open.
+    return;
+  }
   evt.Skip();
   
 }
