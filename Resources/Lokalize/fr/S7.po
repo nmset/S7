@@ -1,21 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# SPDX-FileCopyrightText: 2025 Saleem EDAH-TALLY <set@nmset.info>
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-13 21:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2025-07-14 13:28+0200\n"
+"PO-Revision-Date: 2025-07-14 13:29+0200\n"
+"Last-Translator: Saleem EDAH-TALLY <set@nmset.info>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #: ../../Resources/UI/S7/s7.cpp:126
 msgid ""
@@ -174,23 +174,22 @@ msgstr "Échec d'initialisation de la bibliothèque 'insane'."
 msgid "'Shift + left' click'' to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../XS7.cpp:95
+#: ../../XS7.cpp:102
 msgid "Could not launch default file manager"
 msgstr "Échec de lancement du gestionnaire de fichier par défaut."
 
-#: ../../XS7.cpp:136
+#: ../../XS7.cpp:143
 msgid "Invalid folder name."
 msgstr "Nom de dossier invalide."
 
-#: ../../XS7.cpp:144
+#: ../../XS7.cpp:151
 msgid "Invalid file basename."
 msgstr "Nom de base de fichier invalide."
 
-#: ../../XS7.cpp:166
 msgid "Copyright: Saleem Edah-Tally [Surgeon] [Hobbyist developer]\n"
 msgstr "Copyright: Saleem Edah-Tally [Chirurgien] [Développeur par hobby]\n"
 
-#: ../../XS7.cpp:167
+#: ../../XS7.cpp:174
 msgid "License: CeCILL/CeCILL-C per file header."
 msgstr "Licence : CeCILL/CeCILL-C selon les entêtes de fichier."
 
@@ -238,15 +237,14 @@ msgstr "Recto-verso :"
 msgid "Total:"
 msgstr "Total :"
 
-#: ../../XS7.cpp:49
+#: ../../XS7.cpp:50
 msgid "'Shift + left' click to generate a new destination file name."
 msgstr "'Maj + clic gauche' pour générer un nouveau fichier de sortie."
 
-#: ../../Resources/UI/S7/s7app.cpp:174 ../../XS7.cpp:164
+#: ../../Resources/UI/S7/s7app.cpp:174
 msgid " - version "
 msgstr " - version "
 
-#: ../../XS7.cpp:165
 msgid ""
 ", using InsaneWidget.\n"
 "\n"
@@ -427,6 +425,18 @@ msgstr "Activez la transparence du texte et de l'arrière-plan. "
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../../XS7.cpp:74
+#: ../../XS7.cpp:75
 msgid "Veto: scanner discovery is running."
 msgstr "Veto : recherche de périphériques en cours."
+
+#: ../../XS7.cpp:173
+msgid "Copyright: Saleem Edah-Tally [Surgeon] [Hobbyist developer]"
+msgstr "Copyright: Saleem Edah-Tally [Chirurgien] [Développeur par hobby]"
+
+#: ../../XS7.cpp:175
+msgid "version "
+msgstr "version "
+
+#: ../../XS7.cpp:175
+msgid ", using InsaneWidget."
+msgstr ", utilisant InsaneWidget."

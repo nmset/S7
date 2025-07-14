@@ -14,6 +14,7 @@
 #include "page.xpm"
 #include <wx/stdpaths.h>
 #include <wx/cmdline.h>
+#include <wx/aboutdlg.h>
 
 using namespace std;
 
@@ -167,11 +168,14 @@ void XS7::OnAbout(wxMouseEvent& evt)
     evt.Skip();
     return;
   }
-  const wxString msg = wxString(_APPNAME_) + _(" - version ") + to_string((_APPVERSION_))
-      + _ (", using InsaneWidget.\n\n")
-      + _ ( "Copyright: Saleem Edah-Tally [Surgeon] [Hobbyist developer]\n" )
-      + _ ( "License: CeCILL/CeCILL-C per file header." );
+  wxAboutDialogInfo info;
+  info.AddDeveloper("Saleem Edah-Tally");
+  info.SetCopyright(_("Copyright: Saleem Edah-Tally [Surgeon] [Hobbyist developer]"));
+  info.SetLicence(_ ( "License: CeCILL/CeCILL-C per file header." ));
+  info.SetVersion(_("version ") + to_string(_APPVERSION_) + _ (", using InsaneWidget."));
+  info.AddTranslator("Saleem Edah-Tally (FR)");
+  info.SetIcon(page_xpm);
+  wxAboutBox(info, this);
 
-  MiscTools::MessageBox(msg);
   evt.Skip();
 }
