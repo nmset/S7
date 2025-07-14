@@ -474,7 +474,7 @@ void XInsaneWidget::OnBtnScanRightClick ( wxMouseEvent& evt )
     if (!m_dlgStampWidgets)
     {
       m_dlgStampWidgets = std::make_unique<wxDialog>
-                            (nullptr, wxID_ANY, _("Stamps"),
+                            (this, wxID_ANY, _("Stamps"),
                             wxDefaultPosition, wxDefaultSize,
                             wxCAPTION | wxRESIZE_BORDER | wxCLOSE_BOX);
       m_dlgStampWidgets->SetSize(600, 500);
