@@ -21,7 +21,7 @@
 
 using namespace std;
 
-#define IERR(e) ("[" + to_string(e) + "] " + lis_strerror(e))
+#define IERR(e) ("[InsaneWorker] - [" + to_string(e) + "] " + lis_strerror(e))
 
 InsaneWorker::InsaneWorker ( InsaneWorkerEvent * evh )
 {
@@ -412,7 +412,7 @@ bool InsaneWorker::Scan(const std::string& dir, const std::string& basename,
       catch (std::bad_alloc& e)
       {
         m_rootSourceItem->close(m_rootSourceItem);
-        cerr << "ABORT: " << e.what() << " - could not allocate " << bytesPerRow << " bytes." << endl;
+        cerr << "[InsaneWorker] - ABORT: " << e.what() << " - could not allocate " << bytesPerRow << " bytes." << endl;
         if (m_evh)
           m_evh->OnError("Insufficient system RAM.");
         return false;
@@ -453,7 +453,7 @@ bool InsaneWorker::GetBottomRight(std::pair<double, double>& br)
   if (res != PAPER_OK)
   {
     const string msg = "Could not initialise the paper library.";
-    cerr << msg << endl;
+    cerr << "[InsaneWorker] - " << msg << endl;
     if (m_evh)
       m_evh->OnError(msg);
     return false;
@@ -463,14 +463,14 @@ bool InsaneWorker::GetBottomRight(std::pair<double, double>& br)
   if (!p)
   {
     string msg = "Failed to find the requested paper; attempt to use a default paper size.";
-    cerr << msg << endl;
+    cerr << "[InsaneWorker] - " << msg << endl;
     if (m_evh)
       m_evh->OnError(msg);
     p = defaultpaper();
     if (!p)
     {
       msg = "Failed to find a default paper size; using the default scanner sizes.";
-      cerr << msg << endl;
+      cerr << "[InsaneWorker] - " << msg << endl;
       if (m_evh)
         m_evh->OnError(msg);
       return false;
@@ -486,7 +486,7 @@ bool InsaneWorker::GetBottomRight(std::pair<double, double>& br)
   else
   {
     const string msg = "The measurement unit of the paper size is not handled; using the default scanner sizes.";
-    cerr << msg << endl;
+    cerr << "[InsaneWorker] - " << msg << endl;
     if (m_evh)
       m_evh->OnError(msg);
     return false;
@@ -499,7 +499,7 @@ bool InsaneWorker::GetBottomRight(std::pair<double, double>& br)
   if (res != PAPER_OK)
   {
     const string msg = "Could not cleanly end the paper library.";
-    cerr << msg << endl;
+    cerr << "[InsaneWorker] - " << msg << endl;
     if (m_evh)
       m_evh->OnError(msg);
   }
