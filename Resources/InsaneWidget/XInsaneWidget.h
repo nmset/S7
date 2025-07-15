@@ -47,12 +47,12 @@ typedef std::map<uint, std::tuple<std::string, InsaneWorkerEvent::ImageAttribute
  * 
  * Text box:
  *  - shows the path and the basename of the files to create. This must be set
- *    by the application in any conveniant manner.
+ *    by the application in any convenient manner.
  *    Pressing the backspace key clears the text box.
  * 
  * Button:
  *  - Right click: shows the scanner widget.
- *  - Left click: starts scanning.
+ *  - Left click: starts or cancels scanning.
  *  - Ctrl + Right click: show the stamp widgets dialog.
  */
 class XInsaneWidget : public InsaneWidget
