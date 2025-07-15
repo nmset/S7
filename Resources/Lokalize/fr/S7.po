@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-14 13:28+0200\n"
-"PO-Revision-Date: 2025-07-14 13:29+0200\n"
+"PO-Revision-Date: 2025-07-15 19:27+0200\n"
 "Last-Translator: Saleem EDAH-TALLY <set@nmset.info>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "Language: fr_FR\n"
@@ -109,7 +109,7 @@ msgstr "Session annulée."
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:250
 msgid "Scanning: "
-msgstr "Numérisation :"
+msgstr "Numérisation : "
 
 #: ../../Resources/InsaneWidget/XInsaneWidget.cpp:252
 msgid "Front face: "
